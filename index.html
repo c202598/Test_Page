@@ -19,7 +19,6 @@
         table { width: 100%; border-collapse: collapse; font-size: 12px; min-width: 350px; }
         th, td { border-bottom: 1px solid #eee; padding: 10px 4px; text-align: center; vertical-align: middle; }
         th { color: #666; font-weight: 600; background: #f9f9f9; white-space: nowrap; }
-        /* 링크를 버튼처럼 스타일링 */
         .map-link { display: inline-block; padding: 8px 10px; background: #e8f0fe; color: #1a73e8; border-radius: 5px; text-decoration: none; font-weight: bold; font-size: 11px; border: 1px solid #1a73e8; }
         .admin-tag { background: #e8f0fe; color: #1a73e8; padding: 2px 6px; border-radius: 4px; font-size: 10px; vertical-align: middle; }
     </style>
@@ -94,15 +93,13 @@
             row.insertCell(1).innerText = log.type;
             row.insertCell(2).innerText = log.time;
             const locCell = row.insertCell(3);
-                  if(log.lat && log.lon) {
-                // 이 부분을 아래 코드로 정확하게 수정하세요
+            if(log.lat && log.lon) {
+                // 수정된 부분: 구글 맵 주소 형식을 정확하게 입력
                 const url = `https://google.com{log.lat},${log.lon}`;
                 locCell.innerHTML = `<a href="${url}" target="_blank" rel="noopener noreferrer" class="map-link">지도보기</a>`;
             } else { locCell.innerText = "-"; }
-
         });
     }
 </script>
 </body>
 </html>
-
