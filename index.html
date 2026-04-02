@@ -94,11 +94,12 @@
             row.insertCell(1).innerText = log.type;
             row.insertCell(2).innerText = log.time;
             const locCell = row.insertCell(3);
-            if(log.lat && log.lon) {
-                // 핵심 수정: JS window.open 대신 표준 <a> 태그를 사용하여 브라우저 차단 회피
+                  if(log.lat && log.lon) {
+                // 이 부분을 아래 코드로 정확하게 수정하세요
                 const url = `https://google.com{log.lat},${log.lon}`;
                 locCell.innerHTML = `<a href="${url}" target="_blank" rel="noopener noreferrer" class="map-link">지도보기</a>`;
             } else { locCell.innerText = "-"; }
+
         });
     }
 </script>
