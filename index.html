@@ -166,6 +166,38 @@
         .modal-title{font-size:16px;font-weight:700;margin-bottom:16px;color:var(--text-primary)}
         .modal-actions{display:flex;gap:8px;margin-top:4px}
         .modal-actions .btn{flex:1}
+
+        /* ── 업무 일지 ── */
+        .diary-date-bar{display:flex;align-items:center;gap:10px;margin-bottom:16px;flex-wrap:wrap}
+        .diary-date-bar input[type="date"]{padding:8px 12px;border:1px solid var(--border);border-radius:var(--radius-sm);font-size:13px;font-family:'Noto Sans KR',sans-serif;color:var(--text-primary);background:#fafafa;outline:none}
+        .diary-date-bar input[type="date"]:focus{border-color:var(--blue)}
+        .diary-write-box{background:var(--bg);border-radius:var(--radius-sm);padding:14px;margin-bottom:16px;border:1px dashed var(--border)}
+        .diary-write-box textarea{width:100%;min-height:80px;resize:vertical;border:1px solid var(--border);border-radius:var(--radius-sm);padding:10px 12px;font-size:14px;font-family:'Noto Sans KR',sans-serif;color:var(--text-primary);background:white;outline:none;transition:border-color .15s;line-height:1.6}
+        .diary-write-box textarea:focus{border-color:var(--blue)}
+        .diary-photo-row{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap;align-items:center}
+        .diary-photo-preview{position:relative;width:64px;height:64px;border-radius:8px;overflow:hidden;border:1px solid var(--border);flex-shrink:0}
+        .diary-photo-preview img{width:100%;height:100%;object-fit:cover}
+        .diary-photo-remove{position:absolute;top:2px;right:2px;background:rgba(0,0,0,0.55);color:white;border:none;border-radius:50%;width:18px;height:18px;font-size:11px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+        .diary-add-photo-btn{width:64px;height:64px;border:1.5px dashed var(--border);border-radius:8px;background:transparent;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;color:var(--text-hint);font-size:11px;gap:3px;transition:border-color .15s}
+        .diary-add-photo-btn:hover{border-color:var(--blue);color:var(--blue)}
+        .diary-add-photo-btn .icon{font-size:20px}
+        .diary-submit-row{display:flex;justify-content:flex-end;margin-top:10px}
+        .diary-list{display:flex;flex-direction:column;gap:10px}
+        .diary-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:14px;transition:box-shadow .15s}
+        .diary-card:hover{box-shadow:0 2px 8px rgba(0,0,0,0.07)}
+        .diary-card-header{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+        .diary-card-author{font-weight:700;font-size:13px}
+        .diary-card-time{font-size:11px;color:var(--text-hint);font-family:'IBM Plex Mono',monospace;margin-left:auto}
+        .diary-card-body{font-size:13px;color:var(--text-primary);line-height:1.7;white-space:pre-wrap;word-break:break-word;margin-bottom:8px}
+        .diary-photos{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+        .diary-photo-thumb{width:72px;height:72px;border-radius:8px;object-fit:cover;cursor:pointer;border:1px solid var(--border);transition:opacity .15s}
+        .diary-photo-thumb:hover{opacity:.85}
+        .diary-card-del{background:transparent;border:none;cursor:pointer;color:var(--text-hint);font-size:12px;padding:2px 6px;border-radius:4px}
+        .diary-card-del:hover{color:var(--red);background:var(--red-light)}
+        .photo-viewer{position:fixed;inset:0;background:rgba(0,0,0,0.92);z-index:300;display:flex;align-items:center;justify-content:center}
+        .photo-viewer img{max-width:95vw;max-height:90vh;border-radius:8px;object-fit:contain}
+        .photo-viewer-close{position:fixed;top:16px;right:20px;color:white;font-size:30px;cursor:pointer;background:none;border:none}
+        .diary-empty{text-align:center;color:var(--text-hint);padding:28px 0;font-size:13px}
     </style>
 </head>
 <body>
@@ -178,6 +210,13 @@
         <button class="btn-pwa-install" id="pwa-install-btn">설치</button>
         <button class="btn-pwa-dismiss" onclick="dismissPWA()">✕</button>
     </div>
+</div>
+
+
+<!-- 사진 전체화면 뷰어 -->
+<div id="photo-viewer" class="photo-viewer hidden" onclick="closeViewer()">
+    <button class="photo-viewer-close" onclick="closeViewer()">✕</button>
+    <img id="viewer-img" src="" alt="">
 </div>
 
 <!-- 비밀번호 변경 모달 -->
@@ -260,6 +299,7 @@
         <button class="panel-tab active" onclick="switchPanel('records')"  data-i18n="tab_records">출퇴근 기록</button>
         <button class="panel-tab"        onclick="switchPanel('summary')"  data-i18n="tab_summary">직원 현황</button>
         <button class="panel-tab"        onclick="switchPanel('overtime')" data-i18n="tab_overtime">야근 기록</button>
+        <button class="panel-tab"        onclick="switchPanel('diary')"    data-i18n="tab_diary">업무 일지</button>
         <button class="panel-tab"        onclick="switchPanel('users')"    data-i18n="tab_users">회원 관리</button>
         <button class="panel-tab"        onclick="switchPanel('settings')" data-i18n="tab_settings">설정</button>
     </div>
@@ -267,6 +307,7 @@
     <div id="user-tabs" class="hidden panel-tabs">
         <button class="panel-tab active" onclick="switchPanel('records')"  data-i18n="tab_records">출퇴근 기록</button>
         <button class="panel-tab"        onclick="switchPanel('overtime')" data-i18n="tab_overtime">야근 기록</button>
+        <button class="panel-tab"        onclick="switchPanel('diary')"    data-i18n="tab_diary">업무 일지</button>
     </div>
 
     <!-- ① 출퇴근 기록 -->
@@ -394,6 +435,37 @@
         </div>
     </div>
 
+
+    <!-- ⑤ 업무 일지 -->
+    <div id="panel-diary" class="hidden">
+
+        <!-- 작성 박스 -->
+        <div class="diary-write-box">
+            <label class="field-label" style="margin-bottom:8px">오늘의 업무 일지 작성</label>
+            <textarea id="diary-text" placeholder="오늘 진행한 작업, 특이사항 등을 자유롭게 작성하세요..."></textarea>
+            <div class="diary-photo-row" id="diary-preview-row">
+                <button class="diary-add-photo-btn" onclick="document.getElementById('diary-file-input').click()">
+                    <span class="icon">📷</span>
+                    <span>사진 추가</span>
+                </button>
+                <input type="file" id="diary-file-input" accept="image/*" multiple style="display:none" onchange="handleDiaryPhotos(this)">
+            </div>
+            <div class="diary-submit-row">
+                <button class="btn btn-blue btn-sm" style="width:auto;padding:10px 20px" id="btn-diary-submit" onclick="submitDiary()">일지 등록</button>
+            </div>
+        </div>
+
+        <!-- 날짜 필터 -->
+        <div class="diary-date-bar">
+            <div class="section-title" id="diary-list-title">업무 일지</div>
+            <input type="date" id="diary-filter-date" onchange="applyDiaryFilter()">
+            <button class="filter-btn" onclick="clearDiaryFilter()">전체 보기</button>
+            <span id="diary-admin-note" class="hidden" style="font-size:11px;color:var(--text-hint);margin-left:auto">관리자는 전체 일지를 볼 수 있습니다</span>
+        </div>
+
+        <div id="diary-list" class="diary-list"></div>
+    </div>
+
 </div><!-- /records-card -->
 
 <script type="module">
@@ -475,6 +547,22 @@ ko:{
     t_pw_change_fail:'변경 실패: ',
     t_summary_no_user:'등록된 직원이 없습니다.',
     btn_pw_change:'변경',
+    tab_diary:'업무 일지',
+    diary_placeholder:'오늘 진행한 작업, 특이사항 등을 자유롭게 작성하세요...',
+    diary_submit:'일지 등록',
+    diary_submitting:'등록 중...',
+    diary_done:'일지가 등록되었습니다!',
+    diary_empty_text:'일지 내용을 입력하세요.',
+    diary_no_entry:'등록된 일지가 없습니다.',
+    diary_del_confirm:'이 일지를 삭제하시겠습니까?',
+    diary_del_done:'삭제되었습니다.',
+    diary_del_fail:'삭제 실패: ',
+    diary_save_fail:'등록 실패: ',
+    diary_load_fail:'일지 로드 실패: ',
+    diary_photo_size:'사진 한 장당 최대 800KB까지 가능합니다.',
+    diary_photo_max:'사진은 최대 5장까지 첨부할 수 있습니다.',
+    diary_admin_note:'관리자는 전체 일지를 볼 수 있습니다',
+    diary_list_title:'업무 일지',
 },
 id:{
     label_id:'ID Pengguna', label_pw:'Kata Sandi',
@@ -544,6 +632,22 @@ id:{
     t_pw_change_fail:'Gagal mengubah: ',
     t_summary_no_user:'Belum ada pegawai terdaftar.',
     btn_pw_change:'Ubah',
+    tab_diary:'Jurnal Kerja',
+    diary_placeholder:'Tulis pekerjaan hari ini, catatan khusus, dll...',
+    diary_submit:'Simpan Jurnal',
+    diary_submitting:'Menyimpan...',
+    diary_done:'Jurnal berhasil disimpan!',
+    diary_empty_text:'Tulis isi jurnal terlebih dahulu.',
+    diary_no_entry:'Belum ada jurnal.',
+    diary_del_confirm:'Hapus jurnal ini?',
+    diary_del_done:'Berhasil dihapus.',
+    diary_del_fail:'Gagal menghapus: ',
+    diary_save_fail:'Gagal menyimpan: ',
+    diary_load_fail:'Gagal memuat jurnal: ',
+    diary_photo_size:'Ukuran foto maksimal 800KB per foto.',
+    diary_photo_max:'Maksimal 5 foto.',
+    diary_admin_note:'Admin dapat melihat semua jurnal',
+    diary_list_title:'Jurnal Kerja',
 }};
 
 // ═══════════════════════════════════════════
@@ -559,11 +663,12 @@ const firebaseConfig = {
 };
 const app  = initializeApp(firebaseConfig);
 const db   = getFirestore(app);
-const UCOL = "users", ACOL = "attendance_records", SCOL = "settings", OT_DOC = "overtime_config";
+const UCOL = "users", ACOL = "attendance_records", SCOL = "settings", OT_DOC = "overtime_config", DCOL = "diary";
 
 let currentUser = null, isAdmin = false;
-let allLogs = [], allUsers = [];
-let unsubLogs = null, unsubUsers = null;
+let allLogs = [], allUsers = [], allDiary = [];
+let unsubLogs = null, unsubUsers = null, unsubDiary = null;
+let diaryPendingPhotos = [];
 let currentLang = 'ko';
 let otHour = 18, otMin = 0;
 let currentPanel = 'records';
@@ -666,7 +771,9 @@ function enterApp() {
 
     applyI18n();
     startLogsListener();
+    startDiaryListener();
     if (isAdmin) startUsersListener();
+    if (isAdmin) document.getElementById('diary-admin-note').classList.remove('hidden');
 }
 
 function setMainAvatar(base64, id) {
@@ -682,6 +789,7 @@ window.doLogout = function() {
     if (!confirm(t('t_logout_confirm'))) return;
     if (unsubLogs)  unsubLogs();
     if (unsubUsers) unsubUsers();
+    if (unsubDiary) unsubDiary();
     location.reload();
 };
 
@@ -690,16 +798,17 @@ window.doLogout = function() {
 // ═══════════════════════════════════════════
 window.switchPanel = function(panel) {
     currentPanel = panel;
-    ['records','summary','overtime','users','settings'].forEach(p => {
+    ['records','summary','overtime','diary','users','settings'].forEach(p => {
         const el = document.getElementById('panel-'+p);
         if (el) el.classList.toggle('hidden', p !== panel);
     });
     document.querySelectorAll('.panel-tab').forEach(btn => {
-        const map = {tab_records:'records',tab_overtime:'overtime',tab_users:'users',tab_settings:'settings'};
+        const map = {tab_records:'records',tab_overtime:'overtime',tab_diary:'diary',tab_users:'users',tab_settings:'settings',tab_summary:'summary'};
         btn.classList.toggle('active', map[btn.getAttribute('data-i18n')] === panel);
     });
     if (panel === 'overtime') applyOTFilter();
     if (panel === 'summary') renderSummary();
+    if (panel === 'diary') applyDiaryFilter();
 };
 
 // ═══════════════════════════════════════════
@@ -1209,6 +1318,169 @@ window.dismissPWA = function() {
 // 서비스 워커 등록
 if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('sw.js').catch(() => {});
+}
+
+
+// ═══════════════════════════════════════════
+//  업무 일지
+// ═══════════════════════════════════════════
+
+// 실시간 리스너
+function startDiaryListener() {
+    const q = query(collection(db, DCOL), orderBy("timestamp","desc"));
+    unsubDiary = onSnapshot(q, snap => {
+        allDiary = snap.docs.map(d => ({id: d.id, ...d.data()}));
+        if (currentPanel === 'diary') applyDiaryFilter();
+    }, e => toast(t('diary_load_fail') + e.message, true));
+}
+
+// 날짜 필터 적용
+window.applyDiaryFilter = function() {
+    const dateVal = document.getElementById('diary-filter-date').value;
+    let entries = isAdmin ? allDiary : allDiary.filter(d => d.userId === currentUser.id);
+    if (dateVal) entries = entries.filter(d => d.date === dateVal);
+    renderDiary(entries);
+};
+
+window.clearDiaryFilter = function() {
+    document.getElementById('diary-filter-date').value = '';
+    applyDiaryFilter();
+};
+
+// 사진 선택 처리
+window.handleDiaryPhotos = function(input) {
+    const files = Array.from(input.files);
+    if (diaryPendingPhotos.length + files.length > 5) {
+        toast(t('diary_photo_max'), true); input.value=''; return;
+    }
+    files.forEach(file => {
+        if (file.size > 800 * 1024) { toast(t('diary_photo_size'), true); return; }
+        const reader = new FileReader();
+        reader.onload = e => {
+            resizeImg(e.target.result, 600).then(resized => {
+                diaryPendingPhotos.push(resized);
+                renderPhotoPreview();
+            });
+        };
+        reader.readAsDataURL(file);
+    });
+    input.value = '';
+};
+
+function renderPhotoPreview() {
+    const row = document.getElementById('diary-preview-row');
+    // 기존 미리보기 제거
+    row.querySelectorAll('.diary-photo-preview').forEach(el => el.remove());
+    // 미리보기 다시 생성
+    const addBtn = row.querySelector('.diary-add-photo-btn');
+    diaryPendingPhotos.forEach((b64, idx) => {
+        const wrap = document.createElement('div');
+        wrap.className = 'diary-photo-preview';
+        wrap.innerHTML = `<img src="${b64}" alt=""><button class="diary-photo-remove" onclick="removeDiaryPhoto(${idx})">✕</button>`;
+        row.insertBefore(wrap, addBtn);
+    });
+    // 5장이면 추가 버튼 숨김
+    addBtn.style.display = diaryPendingPhotos.length >= 5 ? 'none' : '';
+}
+
+window.removeDiaryPhoto = function(idx) {
+    diaryPendingPhotos.splice(idx, 1);
+    renderPhotoPreview();
+};
+
+// 일지 등록
+window.submitDiary = async function() {
+    const text = document.getElementById('diary-text').value.trim();
+    if (!text) return toast(t('diary_empty_text'), true);
+
+    setBtnLoad('btn-diary-submit', true, t('diary_submitting'));
+    try {
+        const now = new Date();
+        const timeStr = now.toLocaleString(currentLang === 'ko' ? 'ko-KR' : 'id-ID', {
+            month:'numeric', day:'numeric', weekday:'short',
+            hour:'2-digit', minute:'2-digit', hour12: false
+        });
+        await addDoc(collection(db, DCOL), {
+            userId:    currentUser.id,
+            text:      text,
+            photos:    [...diaryPendingPhotos],
+            date:      todayStr(),
+            time:      timeStr,
+            timestamp: serverTimestamp()
+        });
+        // 초기화
+        document.getElementById('diary-text').value = '';
+        diaryPendingPhotos = [];
+        renderPhotoPreview();
+        toast(t('diary_done'));
+    } catch(e) {
+        toast(t('diary_save_fail') + e.message, true);
+    } finally {
+        setBtnLoad('btn-diary-submit', false, t('diary_submit'));
+    }
+};
+
+// 일지 삭제
+window.deleteDiary = async function(id, ownerId) {
+    if (!isAdmin && ownerId !== currentUser.id) return;
+    if (!confirm(t('diary_del_confirm'))) return;
+    try {
+        await deleteDoc(doc(db, DCOL, id));
+        toast(t('diary_del_done'));
+    } catch(e) { toast(t('diary_del_fail') + e.message, true); }
+};
+
+// 일지 렌더링
+function renderDiary(entries) {
+    const list = document.getElementById('diary-list');
+    list.innerHTML = '';
+    if (!entries.length) {
+        list.innerHTML = `<div class="diary-empty">${t('diary_no_entry')}</div>`;
+        return;
+    }
+    entries.forEach(entry => {
+        const canDel = isAdmin || entry.userId === currentUser.id;
+        const u = allUsers.find(u => u.docId === entry.userId);
+        const photoB64 = u?.photoBase64;
+        const avatarHtml = photoB64
+            ? `<img src="${photoB64}" alt="" style="width:100%;height:100%;object-fit:cover;border-radius:50%">`
+            : `<span style="font-size:11px;font-weight:700">${(entry.userId||'?').slice(0,2).toUpperCase()}</span>`;
+
+        const photosHtml = (entry.photos || []).length > 0
+            ? `<div class="diary-photos">${(entry.photos||[]).map(p =>
+                `<img class="diary-photo-thumb" src="${p}" alt="" onclick="openViewer('${p}')">`
+              ).join('')}</div>`
+            : '';
+
+        const card = document.createElement('div');
+        card.className = 'diary-card';
+        card.innerHTML = `
+            <div class="diary-card-header">
+                <div class="mini-avatar">${avatarHtml}</div>
+                <span class="diary-card-author">${entry.userId || '-'}</span>
+                <span class="diary-card-time">${entry.time || entry.date || ''}</span>
+                ${canDel ? `<button class="diary-card-del" onclick="deleteDiary('${entry.id}','${entry.userId}')">삭제</button>` : ''}
+            </div>
+            <div class="diary-card-body">${escapeHtml(entry.text)}</div>
+            ${photosHtml}
+        `;
+        list.appendChild(card);
+    });
+}
+
+// 사진 전체화면 뷰어
+window.openViewer = function(src) {
+    document.getElementById('viewer-img').src = src;
+    document.getElementById('photo-viewer').classList.remove('hidden');
+};
+window.closeViewer = function() {
+    document.getElementById('photo-viewer').classList.add('hidden');
+    document.getElementById('viewer-img').src = '';
+};
+
+// XSS 방지 이스케이프
+function escapeHtml(str) {
+    return (str||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 
 
