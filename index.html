@@ -357,7 +357,7 @@
     <!-- ② 직원 현황 요약 (관리자) -->
     <div id="panel-summary" class="hidden">
         <div class="section-header">
-            <div class="section-title" id="summary-date-label">Status Pegawai Hari Ini</div>
+            <div class="section-title" id="summary-date-label">summary_today</div>
             <input type="date" id="summary-date" style="padding:6px 10px;border:1px solid var(--border);border-radius:var(--radius-sm);font-size:13px;font-family:'Noto Sans KR',sans-serif;background:#fafafa;outline:none;color:var(--text-primary)" onchange="renderSummary()">
         </div>
         <div id="summary-grid" class="summary-grid"></div>
@@ -1259,7 +1259,7 @@ window.renderSummary = function() {
     const targetDate = dateInput.value || todayStr();
     dateInput.value = targetDate;
     document.getElementById('summary-date-label').innerText =
-        targetDate === todayStr() ? 'Status Pegawai Hari Ini' : targetDate + ' Status Pegawai';
+        targetDate === todayStr() ? 'summary_today' : targetDate + ' Status Pegawai';
 
     grid.innerHTML = '';
     if (!allUsers.length) {
