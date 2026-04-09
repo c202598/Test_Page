@@ -210,7 +210,7 @@
         .diary-card.editing{border-color:var(--blue);box-shadow:0 0 0 2px rgba(26,115,232,0.12)}
 
         /* 헤더 설치 버튼 */
-        .btn-install-header{display:inline-flex;align-items:center;gap:5px;padding:5px 12px;background:var(--blue);color:white;border:none;border-radius:16px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Noto Sans KR',sans-serif;white-space:nowrap;transition:opacity .15s}
+        .btn-install-header{display:none;align-items:center;gap:5px;padding:5px 12px;background:var(--blue);color:white;border:none;border-radius:16px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Noto Sans KR',sans-serif;white-space:nowrap;transition:opacity .15s}
         .btn-install-header:hover{opacity:.85}
         .btn-install-header.visible{display:inline-flex}
 
@@ -227,10 +227,25 @@
         /* 아바타 - 모든 사용자 업로드 가능 */
         .avatar.editable:hover .av-upload-overlay{display:flex}
         .av-upload-overlay{cursor:pointer}
+
+        /* ── 시간대별 인사말 ── */
+        .greeting-card{max-width:680px;margin:0 auto 12px;border-radius:var(--radius);padding:16px 20px;display:flex;align-items:center;gap:14px;box-shadow:var(--shadow)}
+        .greeting-icon{font-size:26px;flex-shrink:0;line-height:1}
+        .greeting-text{flex:1;min-width:0}
+        .greeting-top{font-size:11px;font-weight:600;opacity:.7;letter-spacing:.04em;margin-bottom:3px;font-family:'IBM Plex Mono',monospace}
+        .greeting-main{font-size:15px;font-weight:700;line-height:1.35}
+        .greeting-sub{font-size:12px;opacity:.7;margin-top:2px}
+        .greeting-morning  {background:linear-gradient(120deg,#fff7ed,#ffedd5);color:#9a3412}
+        .greeting-noon     {background:linear-gradient(120deg,#fefce8,#fef9c3);color:#854d0e}
+        .greeting-afternoon{background:linear-gradient(120deg,#eff6ff,#dbeafe);color:#1e3a5f}
+        .greeting-evening  {background:linear-gradient(120deg,#f0f4ff,#e0e7ff);color:#312e81}
+        .greeting-night    {background:linear-gradient(120deg,#1e1b4b,#312e81);color:#e0e7ff}
+        .greeting-night .greeting-top{color:#a5b4fc}
+        .greeting-night .greeting-sub{color:#c7d2fe}
     </style>
 </head>
 <body>
-<div id="pwa-banner">
+<div id="pwa-banner" style="display:none">
     <div class="pwa-banner">
         <div class="pwa-banner-text">
             <strong id="pwa-title" data-i18n="pwa_title">📱 앱으로 설치하기</strong>
@@ -285,10 +300,6 @@
 </div>
 
 <!-- 인증 카드 -->
-<!-- 로그인 로고 -->
-<div style="max-width:680px;margin:0 auto 20px;text-align:center;padding:24px 20px 0">
-    <img src="data:image/jpeg;base64,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" alt="ADINA" style="height:72px;object-fit:contain;display:inline-block">
-</div>
 
 <div class="card" id="auth-card">
     <label class="field-label" data-i18n="label_id">아이디</label>
@@ -299,6 +310,9 @@
 </div>
 
 <!-- 메인 카드 -->
+<!-- 시간대별 인사말 카드 -->
+<div id="greeting-card" class="greeting-card hidden"></div>
+
 <div class="card hidden" id="main-card">
     <div class="user-bar">
         <div class="user-info">
@@ -487,7 +501,28 @@
             </div>
             <p style="font-size:12px;color:var(--text-hint);margin-top:10px" id="ot-current-label"></p>
         </div>
-    </div>
+        <!-- 인사말 설정 (관리자) -->
+        <div class="admin-box" style="margin-top:12px">
+            <div class="admin-box-title" data-i18n="greeting_settings_title">시간대별 인사말 설정</div>
+            <p style="font-size:12px;color:var(--text-secondary);margin-bottom:14px" data-i18n="greeting_settings_desc">시간대별로 표시할 인사말을 설정하세요. 비워두면 기본 문구가 사용됩니다.</p>
+
+            <label class="field-label" data-i18n="greeting_label_morning">새벽/아침 (05:00~11:59)</label>
+            <input class="field" type="text" id="greet-morning" placeholder="좋은 아침이에요" style="margin-bottom:8px">
+
+            <label class="field-label" data-i18n="greeting_label_noon">정오 (12:00~13:59)</label>
+            <input class="field" type="text" id="greet-noon" placeholder="점심 맛있게 드세요" style="margin-bottom:8px">
+
+            <label class="field-label" data-i18n="greeting_label_afternoon">오후 (14:00~17:59)</label>
+            <input class="field" type="text" id="greet-afternoon" placeholder="좋은 오후예요" style="margin-bottom:8px">
+
+            <label class="field-label" data-i18n="greeting_label_evening">저녁 (18:00~20:59)</label>
+            <input class="field" type="text" id="greet-evening" placeholder="좋은 저녁이에요" style="margin-bottom:8px">
+
+            <label class="field-label" data-i18n="greeting_label_night">밤/새벽 (21:00~04:59)</label>
+            <input class="field" type="text" id="greet-night" placeholder="편안한 밤 되세요" style="margin-bottom:12px">
+
+            <button class="btn btn-blue btn-sm" style="width:auto;padding:10px 20px" onclick="saveGreetingSettings()" data-i18n="greeting_save">저장</button>
+        </div>
     </div>
 
 
@@ -534,8 +569,6 @@ import { getFirestore, collection, addDoc, deleteDoc, getDocs,
          doc, query, orderBy, where, onSnapshot,
          serverTimestamp, setDoc, getDoc, updateDoc }
     from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
-import { getStorage, ref, uploadBytesResumable, getDownloadURL, deleteObject }
-    from "https://www.gstatic.com/firebasejs/12.11.0/firebase-storage.js";
 
 // ═══════════════════════════════════════════
 //  다국어 사전
@@ -610,6 +643,22 @@ ko:{
     t_summary_no_user:'등록된 직원이 없습니다.',
     btn_pw_change:'비밀번호 변경',
     tab_diary:'업무 일지',
+    greeting_settings_title:'시간대별 인사말 설정',
+    greeting_settings_desc:'시간대별로 표시할 인사말을 설정하세요. 비워두면 기본 문구가 사용됩니다.',
+    greeting_label_morning:'새벽/아침 (05:00~11:59)',
+    greeting_label_noon:'정오 (12:00~13:59)',
+    greeting_label_afternoon:'오후 (14:00~17:59)',
+    greeting_label_evening:'저녁 (18:00~20:59)',
+    greeting_label_night:'밤/새벽 (21:00~04:59)',
+    greeting_save:'저장',
+    greeting_saved:'인사말 설정이 저장되었습니다.',
+    greeting_save_fail:'저장 실패: ',
+    greet_morning_icon:'🌅', greet_noon_icon:'☀️', greet_afternoon_icon:'🌤️', greet_evening_icon:'🌆', greet_night_icon:'🌙',
+    greet_morning_label:'좋은 아침이에요', greet_noon_label:'점심 맛있게 드세요',
+    greet_afternoon_label:'좋은 오후예요', greet_evening_label:'좋은 저녁이에요', greet_night_label:'편안한 밤 되세요',
+    greet_morning_sub:'오늘도 활기차게 시작해요!', greet_noon_sub:'잠깐 쉬어가는 시간이에요.',
+    greet_afternoon_sub:'오늘 하루도 화이팅!', greet_evening_sub:'오늘 하루 고생 많으셨어요.',
+    greet_night_sub:'내일도 좋은 하루 되세요.',
     diary_placeholder:'오늘 진행한 작업, 특이사항 등을 자유롭게 작성하세요...',
     diary_submit:'일지 등록',
     diary_submitting:'등록 중...',
@@ -730,6 +779,22 @@ id:{
     t_summary_no_user:'Belum ada pegawai terdaftar.',
     btn_pw_change:'Ubah',
     tab_diary:'Jurnal Kerja',
+    greeting_settings_title:'Pengaturan Salam Waktu',
+    greeting_settings_desc:'Atur pesan sambutan berdasarkan waktu. Kosongkan untuk menggunakan teks default.',
+    greeting_label_morning:'Subuh/Pagi (05:00~11:59)',
+    greeting_label_noon:'Siang (12:00~13:59)',
+    greeting_label_afternoon:'Sore (14:00~17:59)',
+    greeting_label_evening:'Petang (18:00~20:59)',
+    greeting_label_night:'Malam/Dini Hari (21:00~04:59)',
+    greeting_save:'Simpan',
+    greeting_saved:'Pengaturan salam berhasil disimpan.',
+    greeting_save_fail:'Gagal menyimpan: ',
+    greet_morning_icon:'🌅', greet_noon_icon:'☀️', greet_afternoon_icon:'🌤️', greet_evening_icon:'🌆', greet_night_icon:'🌙',
+    greet_morning_label:'Selamat Pagi', greet_noon_label:'Selamat Siang',
+    greet_afternoon_label:'Selamat Sore', greet_evening_label:'Selamat Petang', greet_night_label:'Selamat Malam',
+    greet_morning_sub:'Semangat memulai hari ini!', greet_noon_sub:'Selamat istirahat sejenak.',
+    greet_afternoon_sub:'Tetap semangat ya!', greet_evening_sub:'Kerja keras hari ini luar biasa.',
+    greet_night_sub:'Istirahat yang cukup ya.',
     diary_placeholder:'Tulis pekerjaan hari ini, catatan khusus, dll...',
     diary_submit:'Simpan Jurnal',
     diary_submitting:'Menyimpan...',
@@ -793,9 +858,8 @@ const firebaseConfig = {
     messagingSenderId:"83328769962",
     appId:"1:83328769962:web:73bdc3d0df5a3076fe95d3"
 };
-const app     = initializeApp(firebaseConfig);
-const db      = getFirestore(app);
-const storage = getStorage(app);
+const app  = initializeApp(firebaseConfig);
+const db   = getFirestore(app);
 const UCOL = "users", ACOL = "attendance_records", SCOL = "settings", OT_DOC = "overtime_config", DCOL = "diary";
 
 let currentUser = null, isAdmin = false;
@@ -804,6 +868,7 @@ let unsubLogs = null, unsubUsers = null, unsubDiary = null;
 let diaryPendingPhotos = [];
 let diaryPendingVideo = null; // {name, base64, sizeMb}
 let videoMaxMb = 30;          // 관리자 설정 가능
+let greetingConfig = { morning:'', noon:'', afternoon:'', evening:'', night:'' };
 let currentLang = 'ko';
 let otHour = 18, otMin = 0;
 let currentPanel = 'records';
@@ -823,6 +888,7 @@ window.setLang = function(lang) {
     applyI18n();
     if (currentUser) {
         updateTodayStatus(); updateBtnState(); applyFilter(); applyOTFilter();
+        showGreetingCard();
         if (isAdmin) { renderUsers(); updateOTLabel(); updateVideoLabel(); renderSummary(); }
         applyDiaryFilter();
     }
@@ -865,6 +931,7 @@ window.doLogin = async function() {
         currentUser = { id, ...snap.data() };
         isAdmin = currentUser.role === 'admin';
         await loadOTSettings();
+        await loadGreetingSettings();
         enterApp();
     } catch(e) { toast(t('t_login_fail')+e.message, true); }
     finally    { setBtnLoad('btn-login', false, t('btn_login')); }
@@ -880,9 +947,25 @@ async function loadOTSettings() {
         }
     } catch(_) {}
 }
+async function loadGreetingSettings() {
+    try {
+        const snap = await getDoc(doc(db, SCOL, 'greeting_config'));
+        if (snap.exists()) {
+            const d = snap.data();
+            greetingConfig = {
+                morning:   d.morning   || '',
+                noon:      d.noon      || '',
+                afternoon: d.afternoon || '',
+                evening:   d.evening   || '',
+                night:     d.night     || ''
+            };
+        }
+    } catch(_) {}
+}
 
 function enterApp() {
     document.getElementById('auth-card').classList.add('hidden');
+    document.getElementById('greeting-card').classList.remove('hidden');
     document.getElementById('main-card').classList.remove('hidden');
     document.getElementById('records-card').classList.remove('hidden');
 
@@ -905,7 +988,12 @@ function enterApp() {
         document.getElementById('ot-min').value  = otMin;
         document.getElementById('video-max-mb').value = videoMaxMb;
         updateOTLabel(); updateVideoLabel();
-        updateVideoLabel();
+        // 인사말 설정값 채우기
+        document.getElementById('greet-morning').value   = greetingConfig.morning;
+        document.getElementById('greet-noon').value      = greetingConfig.noon;
+        document.getElementById('greet-afternoon').value = greetingConfig.afternoon;
+        document.getElementById('greet-evening').value   = greetingConfig.evening;
+        document.getElementById('greet-night').value     = greetingConfig.night;
     } else {
         document.getElementById('user-tabs').classList.remove('hidden');
     }
@@ -934,6 +1022,7 @@ function setMainAvatar(base64, id) {
 // ═══════════════════════════════════════════
 window.doLogout = function() {
     if (!confirm(t('t_logout_confirm'))) return;
+    document.getElementById('greeting-card').classList.add('hidden');
     if (unsubLogs)  unsubLogs();
     if (unsubUsers) unsubUsers();
     if (unsubDiary) unsubDiary();
@@ -1464,44 +1553,54 @@ document.getElementById('pw-modal').addEventListener('click', function(e) {
 // ═══════════════════════════════════════════
 //  PWA 설치
 // ═══════════════════════════════════════════
+// ── PWA 설치 ──
 let deferredPrompt = null;
 
-// beforeinstallprompt: 브라우저가 설치 가능할 때 prompt 저장
+function showInstallUI() {
+    // 헤더 버튼 표시
+    const headerBtn = document.getElementById('btn-install-header');
+    if (headerBtn) headerBtn.classList.add('visible');
+    // 배너도 표시
+    document.getElementById('pwa-banner').style.display = '';
+}
+function hideInstallUI() {
+    const headerBtn = document.getElementById('btn-install-header');
+    if (headerBtn) headerBtn.classList.remove('visible');
+    document.getElementById('pwa-banner').style.display = 'none';
+}
+
 window.addEventListener('beforeinstallprompt', e => {
     e.preventDefault();
     deferredPrompt = e;
+    showInstallUI();
 });
-
-// 설치 완료 시 토스트
 window.addEventListener('appinstalled', () => {
+    hideInstallUI();
     deferredPrompt = null;
     toast(t('pwa_installed'));
 });
 
-// 설치 버튼 클릭 — prompt 있으면 실행, 없으면 안내 메시지
+// 헤더 버튼 & 배너 버튼 공통 설치 함수
 window.doInstall = async function() {
-    if (deferredPrompt) {
-        deferredPrompt.prompt();
-        const { outcome } = await deferredPrompt.userChoice;
-        deferredPrompt = null;
-    } else {
-        // 이미 설치됐거나 iOS처럼 prompt 미지원 환경
-        toast('브라우저 메뉴 → "홈 화면에 추가"를 이용하세요 📲');
-    }
+    if (!deferredPrompt) return;
+    deferredPrompt.prompt();
+    const { outcome } = await deferredPrompt.userChoice;
+    if (outcome === 'accepted') hideInstallUI();
+    deferredPrompt = null;
 };
 
-// 배너 닫기 (버튼은 항상 유지)
+// 배너 설치 버튼도 doInstall 사용
+document.getElementById('pwa-install-btn').addEventListener('click', () => doInstall());
+
 window.dismissPWA = function() {
     document.getElementById('pwa-banner').style.display = 'none';
+    // 헤더 버튼은 남겨둠 (재설치 가능)
 };
 
 // 서비스 워커 등록
 if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('sw.js').catch(() => {});
 }
-
-// 배너 설치 버튼 이벤트
-document.getElementById('pwa-install-btn').addEventListener('click', () => doInstall());
 
 
 // ═══════════════════════════════════════════
@@ -1550,25 +1649,21 @@ window.handleDiaryPhotos = function(input) {
     input.value = '';
 };
 
-// ── 동영상 업로드 핸들러 (File 객체 보관 → Storage 업로드) ──
+// ── 동영상 업로드 핸들러 ──
 window.handleDiaryVideo = function(input) {
     const file = input.files[0];
     input.value = '';
     if (!file) return;
-    if (diaryPendingVideo) return toast(t('diary_video_only_one'), true);
     if (file.size > videoMaxMb * 1024 * 1024) {
         toast(t('diary_video_size', {mb: videoMaxMb}), true);
         return;
     }
-    // File 객체 자체를 보관 (base64 변환 X → Firestore 용량 초과 방지)
-    const previewUrl = URL.createObjectURL(file);
-    diaryPendingVideo = {
-        file:     file,
-        name:     file.name,
-        previewUrl,
-        sizeMb:   (file.size / 1024 / 1024).toFixed(1)
+    const reader = new FileReader();
+    reader.onload = e => {
+        diaryPendingVideo = { name: file.name, base64: e.target.result, sizeMb: (file.size/1024/1024).toFixed(1) };
+        renderPhotoPreview();
     };
-    renderPhotoPreview();
+    reader.readAsDataURL(file);
 };
 
 
@@ -1590,7 +1685,7 @@ function renderPhotoPreview() {
     if (diaryPendingVideo) {
         const wrap = document.createElement('div');
         wrap.className = 'diary-video-preview';
-        wrap.innerHTML = `<video src="${diaryPendingVideo.previewUrl}" muted playsinline></video>
+        wrap.innerHTML = `<video src="${diaryPendingVideo.base64}" muted playsinline></video>
             <span class="diary-video-badge">🎬 ${diaryPendingVideo.sizeMb}MB</span>
             <button class="diary-photo-remove" onclick="removeDiaryVideo()" style="top:2px;right:2px">✕</button>`;
         row.insertBefore(wrap, insertBefore);
@@ -1618,36 +1713,16 @@ window.submitDiary = async function() {
             month:'numeric', day:'numeric', weekday:'short',
             hour:'2-digit', minute:'2-digit', hour12: false
         });
-
-        // ── 동영상: Firebase Storage에 업로드 후 URL 획득 ──
-        let videoUrl  = null;
-        let videoName = null;
-        if (diaryPendingVideo) {
-            const file      = diaryPendingVideo.file;
-            const storePath = `diary_videos/${currentUser.id}_${Date.now()}_${file.name}`;
-            const storageRef = ref(storage, storePath);
-            // 업로드 (progress 없이 간단히 await)
-            await new Promise((resolve, reject) => {
-                const task = uploadBytesResumable(storageRef, file);
-                task.on('state_changed', null, reject, () => resolve(task.snapshot));
-            });
-            videoUrl  = await getDownloadURL(storageRef);
-            videoName = storePath; // 삭제 시 사용
-        }
-
         await addDoc(collection(db, DCOL), {
             userId:    currentUser.id,
             text:      text,
             photos:    [...diaryPendingPhotos],
-            videoUrl:  videoUrl,
-            videoName: videoName,
+            video:     diaryPendingVideo ? diaryPendingVideo.base64 : null,
             date:      todayStr(),
             time:      timeStr,
             timestamp: serverTimestamp()
         });
-
         // 초기화
-        if (diaryPendingVideo?.previewUrl) URL.revokeObjectURL(diaryPendingVideo.previewUrl);
         document.getElementById('diary-text').value = '';
         diaryPendingPhotos = [];
         diaryPendingVideo  = null;
@@ -1660,16 +1735,11 @@ window.submitDiary = async function() {
     }
 };
 
-// 일지 삭제 (Storage 동영상도 함께 삭제)
+// 일지 삭제
 window.deleteDiary = async function(id, ownerId) {
     if (!isAdmin && ownerId !== currentUser.id) return;
     if (!confirm(t('diary_del_confirm'))) return;
     try {
-        // Storage 동영상 삭제 (있는 경우)
-        const snap = allDiary.find(d => d.id === id);
-        if (snap?.videoName) {
-            try { await deleteObject(ref(storage, snap.videoName)); } catch(_) {}
-        }
         await deleteDoc(doc(db, DCOL, id));
         toast(t('diary_del_done'));
     } catch(e) { toast(t('diary_del_fail') + e.message, true); }
@@ -1696,9 +1766,9 @@ function renderDiary(entries) {
                 `<img class="diary-photo-thumb" src="${p}" alt="" onclick="openViewer('${p}')">`
               ).join('')}</div>`
             : '';
-        const videoHtml = entry.videoUrl
+        const videoHtml = entry.video
             ? `<div class="diary-photos" style="margin-top:6px">
-                <video class="diary-video-thumb" src="${entry.videoUrl}" controls style="width:120px;height:80px;border-radius:8px"></video>
+                <video class="diary-video-thumb" src="${entry.video}" controls style="width:120px;height:80px;border-radius:8px;cursor:pointer" onclick="openMediaViewer('${entry.video}')"></video>
                </div>`
             : '';
 
@@ -1718,7 +1788,6 @@ function renderDiary(entries) {
             <div class="diary-photos" id="diary-photos-${entry.id}">${(entry.photos||[]).map(p =>
                 `<img class="diary-photo-thumb" src="${p}" alt="" onclick="openViewer('${p}')">`
             ).join('')}</div>
-            <div id="diary-video-${entry.id}">${entry.videoUrl ? `<div class="diary-photos" style="margin-top:6px"><video class="diary-video-thumb" src="${entry.videoUrl}" controls style="width:120px;height:80px;border-radius:8px"></video></div>` : ''}</div>
             <div id="diary-edit-area-${entry.id}"></div>
         `;
         list.appendChild(card);
@@ -1899,6 +1968,71 @@ window.saveEditDiary = async function(id) {
 function escapeHtml(str) {
     return (str||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
+
+
+// ═══════════════════════════════════════════
+//  시간대별 인사말
+// ═══════════════════════════════════════════
+function getTimeSlot() {
+    const h = new Date().getHours();
+    if (h >= 5  && h < 12) return 'morning';
+    if (h >= 12 && h < 14) return 'noon';
+    if (h >= 14 && h < 18) return 'afternoon';
+    if (h >= 18 && h < 21) return 'evening';
+    return 'night';
+}
+
+function showGreetingCard() {
+    const card = document.getElementById('greeting-card');
+    if (!card || !currentUser) return;
+    const slot  = getTimeSlot();
+    const name  = currentUser.id || '';
+    const icon  = t('greet_' + slot + '_icon');
+    const label = greetingConfig[slot] || t('greet_' + slot + '_label');
+    const sub   = t('greet_' + slot + '_sub');
+    const slotClass = {
+        morning:'greeting-morning', noon:'greeting-noon',
+        afternoon:'greeting-afternoon', evening:'greeting-evening', night:'greeting-night'
+    }[slot];
+    const now = new Date();
+    const timeStr = now.toLocaleTimeString(currentLang === 'ko' ? 'ko-KR' : 'id-ID',
+        { hour:'2-digit', minute:'2-digit', hour12:false });
+    card.className = 'greeting-card ' + slotClass;
+    card.innerHTML = `
+        <div class="greeting-icon">${icon}</div>
+        <div class="greeting-text">
+            <div class="greeting-top">${timeStr}</div>
+            <div class="greeting-main">${currentLang === 'ko'
+                ? `안녕하세요! <strong>${name}</strong>님, ${label}`
+                : `Halo, <strong>${name}</strong>! ${label}`}</div>
+            <div class="greeting-sub">${sub}</div>
+        </div>`;
+}
+// enterApp 직후 카드 표시
+function showGreetingCardOnEnter() {
+    showGreetingCard();
+    // 1분마다 시간대 갱신
+    if (!window._greetTimer) {
+        window._greetTimer = setInterval(() => { if (currentUser) showGreetingCard(); }, 60000);
+    }
+}
+
+window.saveGreetingSettings = async function() {
+    if (!isAdmin) return;
+    const data = {
+        morning:   document.getElementById('greet-morning').value.trim(),
+        noon:      document.getElementById('greet-noon').value.trim(),
+        afternoon: document.getElementById('greet-afternoon').value.trim(),
+        evening:   document.getElementById('greet-evening').value.trim(),
+        night:     document.getElementById('greet-night').value.trim(),
+    };
+    try {
+        await setDoc(doc(db, SCOL, 'greeting_config'), data);
+        greetingConfig = data;
+        showGreetingCard();
+        toast(t('greeting_saved'));
+    } catch(e) { toast(t('greeting_save_fail') + e.message, true); }
+};
 
 
 applyI18n();
