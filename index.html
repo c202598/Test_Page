@@ -430,7 +430,6 @@
         <button class="panel-tab"        onclick="switchPanel('overtime')" data-i18n="tab_overtime">야근 기록</button>
         <button class="panel-tab"        onclick="switchPanel('diary')"    data-i18n="tab_diary">업무 일지</button>
         <button class="panel-tab"        onclick="switchPanel('schedule')" data-i18n="tab_schedule">일정</button>
-        <button class="panel-tab"        onclick="switchPanel('schedule')" data-i18n="tab_schedule">일정</button>
         <button class="panel-tab"        onclick="switchPanel('users')"    data-i18n="tab_users">회원 관리</button>
         <button class="panel-tab"        onclick="switchPanel('settings')" data-i18n="tab_settings">설정</button>
     </div>
@@ -439,6 +438,7 @@
         <button class="panel-tab active" onclick="switchPanel('records')"  data-i18n="tab_records">출퇴근 기록</button>
         <button class="panel-tab"        onclick="switchPanel('overtime')" data-i18n="tab_overtime">야근 기록</button>
         <button class="panel-tab"        onclick="switchPanel('diary')"    data-i18n="tab_diary">업무 일지</button>
+        <button class="panel-tab"        onclick="switchPanel('schedule')" data-i18n="tab_schedule">일정</button>
     </div>
 
     <!-- ① 출퇴근 기록 -->
@@ -585,19 +585,19 @@
             <p style="font-size:12px;color:var(--text-secondary);margin-bottom:14px" data-i18n="greeting_settings_desc">시간대별로 표시할 인사말을 설정하세요. 비워두면 기본 문구가 사용됩니다.</p>
 
             <label class="field-label" data-i18n="greeting_label_morning">새벽/아침 (05:00~11:59)</label>
-            <input class="field" type="text" id="greet-morning" placeholder="좋은 아침이에요" style="margin-bottom:8px">
+            <input class="field" type="text" id="greet-morning" data-i18n-placeholder="greet_morning_ph" placeholder="좋은 아침이에요" style="margin-bottom:8px">
 
             <label class="field-label" data-i18n="greeting_label_noon">정오 (12:00~13:59)</label>
-            <input class="field" type="text" id="greet-noon" placeholder="점심 맛있게 드세요" style="margin-bottom:8px">
+            <input class="field" type="text" id="greet-noon" data-i18n-placeholder="greet_noon_ph" placeholder="점심 맛있게 드세요" style="margin-bottom:8px">
 
             <label class="field-label" data-i18n="greeting_label_afternoon">오후 (14:00~17:59)</label>
-            <input class="field" type="text" id="greet-afternoon" placeholder="좋은 오후예요" style="margin-bottom:8px">
+            <input class="field" type="text" id="greet-afternoon" data-i18n-placeholder="greet_afternoon_ph" placeholder="좋은 오후예요" style="margin-bottom:8px">
 
             <label class="field-label" data-i18n="greeting_label_evening">저녁 (18:00~20:59)</label>
-            <input class="field" type="text" id="greet-evening" placeholder="좋은 저녁이에요" style="margin-bottom:8px">
+            <input class="field" type="text" id="greet-evening" data-i18n-placeholder="greet_evening_ph" placeholder="좋은 저녁이에요" style="margin-bottom:8px">
 
             <label class="field-label" data-i18n="greeting_label_night">밤/새벽 (21:00~04:59)</label>
-            <input class="field" type="text" id="greet-night" placeholder="편안한 밤 되세요" style="margin-bottom:12px">
+            <input class="field" type="text" id="greet-night" data-i18n-placeholder="greet_night_ph" placeholder="편안한 밤 되세요" style="margin-bottom:12px">
 
             <button class="btn btn-blue btn-sm" style="width:auto;padding:10px 20px" onclick="saveGreetingSettings()" data-i18n="greeting_save">저장</button>
         </div>
@@ -615,27 +615,27 @@
                 <div class="month-label" id="cal-month-label"></div>
                 <button class="month-nav-btn" onclick="calMove(1)">&#8250;</button>
             </div>
-            <button class="schedule-today-btn" onclick="calToday()">오늘</button>
-            <button class="btn-add-schedule" onclick="openSchModal(null)">+ 일정 추가</button>
+            <button class="schedule-today-btn" onclick="calToday()" data-i18n="sch_btn_today">오늘</button>
+            <button class="btn-add-schedule" onclick="openSchModal(null)" data-i18n="sch_add_btn">+ 일정 추가</button>
         </div>
 
         <!-- 캘린더 그리드 -->
         <div class="cal-grid" id="cal-grid">
-            <div class="cal-header sun">일</div>
-            <div class="cal-header">월</div>
-            <div class="cal-header">화</div>
-            <div class="cal-header">수</div>
-            <div class="cal-header">목</div>
-            <div class="cal-header">금</div>
-            <div class="cal-header sat">토</div>
+            <div class="cal-header sun" id="cal-dow-0">일</div>
+            <div class="cal-header"     id="cal-dow-1">월</div>
+            <div class="cal-header"     id="cal-dow-2">화</div>
+            <div class="cal-header"     id="cal-dow-3">수</div>
+            <div class="cal-header"     id="cal-dow-4">목</div>
+            <div class="cal-header"     id="cal-dow-5">금</div>
+            <div class="cal-header sat" id="cal-dow-6">토</div>
         </div>
 
         <!-- 선택한 날 일정 목록 -->
-        <div class="schedule-list-header" id="sch-day-label">오늘 일정</div>
+        <div class="schedule-list-header" id="sch-day-label"></div>
         <div id="sch-day-list"></div>
 
         <!-- 다가오는 일정 -->
-        <div class="sch-all-header">다가오는 일정</div>
+        <div class="sch-all-header" data-i18n="sch_upcoming_title">다가오는 일정</div>
         <div id="sch-upcoming-list"></div>
 
     </div>
@@ -643,44 +643,44 @@
     <!-- 일정 추가/수정 모달 -->
     <div id="sch-modal" class="sch-modal-overlay hidden" onclick="if(event.target===this)closeSchModal()">
         <div class="sch-modal">
-            <div class="sch-modal-title" id="sch-modal-title">일정 추가</div>
-            <label class="field-label">제목</label>
-            <input class="field" type="text" id="sch-title" placeholder="일정 제목">
+            <div class="sch-modal-title" id="sch-modal-title"></div>
+            <label class="field-label" data-i18n="sch_label_title">제목</label>
+            <input class="field" type="text" id="sch-title" data-i18n-placeholder="sch_title_placeholder" placeholder="일정 제목">
             <div class="sch-field-row">
                 <div style="flex:1">
-                    <label class="field-label">시작일</label>
+                    <label class="field-label" data-i18n="sch_label_start">시작일</label>
                     <input class="field" type="date" id="sch-start">
                 </div>
                 <div style="flex:1">
-                    <label class="field-label">종료일</label>
+                    <label class="field-label" data-i18n="sch_label_end">종료일</label>
                     <input class="field" type="date" id="sch-end">
                 </div>
             </div>
             <div class="sch-field-row">
                 <div style="flex:1">
-                    <label class="field-label">시작 시간 (선택)</label>
+                    <label class="field-label" data-i18n="sch_label_time_start">시작 시간 (선택)</label>
                     <input class="field" type="time" id="sch-time-start" style="margin-bottom:12px">
                 </div>
                 <div style="flex:1">
-                    <label class="field-label">종료 시간 (선택)</label>
+                    <label class="field-label" data-i18n="sch_label_time_end">종료 시간 (선택)</label>
                     <input class="field" type="time" id="sch-time-end" style="margin-bottom:12px">
                 </div>
             </div>
-            <label class="field-label">카테고리</label>
+            <label class="field-label" data-i18n="sch_label_category">카테고리</label>
             <select class="cat-select" id="sch-cat">
-                <option value="work">업무</option>
-                <option value="meeting">회의</option>
-                <option value="personal">개인</option>
-                <option value="holiday">휴일/공휴일</option>
-                <option value="etc">기타</option>
+                <option value="work"     data-i18n="sch_cat_work">업무</option>
+                <option value="meeting"  data-i18n="sch_cat_meeting">회의</option>
+                <option value="personal" data-i18n="sch_cat_personal">개인</option>
+                <option value="holiday"  data-i18n="sch_cat_holiday">휴일/공휴일</option>
+                <option value="etc"      data-i18n="sch_cat_etc">기타</option>
             </select>
-            <label class="field-label">메모 (선택)</label>
-            <input class="field" type="text" id="sch-desc" placeholder="추가 메모" style="margin-bottom:12px">
-            <label class="field-label">작성자</label>
+            <label class="field-label" data-i18n="sch_label_desc">메모 (선택)</label>
+            <input class="field" type="text" id="sch-desc" data-i18n-placeholder="sch_desc_placeholder" placeholder="추가 메모" style="margin-bottom:12px">
+            <label class="field-label" data-i18n="sch_label_author">작성자</label>
             <input class="field" type="text" id="sch-author" placeholder="" readonly style="background:#f5f5f5;margin-bottom:12px">
             <div class="sch-actions">
-                <button class="btn btn-ghost" onclick="closeSchModal()">취소</button>
-                <button class="btn btn-blue"  onclick="saveSchedule()" id="btn-sch-save">저장</button>
+                <button class="btn btn-ghost" onclick="closeSchModal()" data-i18n="btn_cancel">취소</button>
+                <button class="btn btn-blue"  onclick="saveSchedule()" id="btn-sch-save" data-i18n="btn_save">저장</button>
             </div>
         </div>
     </div>
@@ -818,6 +818,40 @@ ko:{
     sch_del_fail:'삭제 실패: ', sch_no_event:'일정이 없습니다.',
     sch_upcoming_none:'다가오는 일정이 없습니다.',
     sch_allday:'종일',
+    sch_add_btn:'+ 일정 추가',
+    sch_upcoming_title:'다가오는 일정',
+    sch_title_placeholder:'일정 제목',
+    sch_label_title:'제목',
+    sch_label_start:'시작일',
+    sch_label_end:'종료일',
+    sch_label_time_start:'시작 시간 (선택)',
+    sch_label_time_end:'종료 시간 (선택)',
+    sch_label_category:'카테고리',
+    sch_label_desc:'메모 (선택)',
+    sch_label_author:'작성자',
+    sch_desc_placeholder:'추가 메모',
+    sch_today_label:'오늘 일정',
+    sch_day_suffix:' 일정',
+    sch_no_title:'제목을 입력하세요.',
+    sch_no_start:'시작일을 입력하세요.',
+    sch_load_fail:'일정 로드 실패: ',
+    sch_btn_today:'오늘',
+    sch_dow:['일','월','화','수','목','금','토'],
+    sch_month_label:'{y}년 {m}월',
+    greet_morning_ph:'좋은 아침이에요',
+    greet_noon_ph:'점심 맛있게 드세요',
+    greet_afternoon_ph:'좋은 오후예요',
+    greet_evening_ph:'좋은 저녁이에요',
+    greet_night_ph:'편안한 밤 되세요',
+    btn_cancel:'취소',
+    sch_more:'+{n}개',
+    video_uploading:'동영상 업로드 중...',
+    file_uploading:'파일 {i}/{total} 업로드 중...',
+    file_download:'MB · 클릭하여 다운로드',
+    storage_no_perm:'Firebase Storage 권한이 없습니다. Console에서 규칙을 확인하세요.',
+    storage_fail:'Storage 업로드 실패: ',
+    pwa_guide:'브라우저 메뉴 → "홈 화면에 추가"를 이용하세요 📲',
+    video_mb_range:'1~100MB 사이로 입력하세요.',
     greeting_settings_title:'시간대별 인사말 설정',
     greeting_settings_desc:'시간대별로 표시할 인사말을 설정하세요. 비워두면 기본 문구가 사용됩니다.',
     greeting_label_morning:'새벽/아침 (05:00~11:59)',
@@ -865,7 +899,6 @@ ko:{
     modal_pw_ph2:'다시 입력',
     modal_pw_confirm:'비밀번호 확인',
     modal_pw_change_btn:'변경하기',
-    btn_cancel:'취소',
     col_pw_change:'비밀번호 변경',
     summary_today:'오늘 직원 현황',
     diary_write_label:'오늘의 업무 일지 작성',
@@ -966,6 +999,40 @@ id:{
     sch_del_fail:'Gagal menghapus: ', sch_no_event:'Tidak ada jadwal.',
     sch_upcoming_none:'Tidak ada jadwal mendatang.',
     sch_allday:'Sepanjang hari',
+    sch_add_btn:'+ Tambah Jadwal',
+    sch_upcoming_title:'Jadwal Mendatang',
+    sch_title_placeholder:'Judul jadwal',
+    sch_label_title:'Judul',
+    sch_label_start:'Tanggal Mulai',
+    sch_label_end:'Tanggal Selesai',
+    sch_label_time_start:'Waktu Mulai (opsional)',
+    sch_label_time_end:'Waktu Selesai (opsional)',
+    sch_label_category:'Kategori',
+    sch_label_desc:'Catatan (opsional)',
+    sch_label_author:'Pembuat',
+    sch_desc_placeholder:'Tambahkan catatan',
+    sch_today_label:'Jadwal Hari Ini',
+    sch_day_suffix:' Jadwal',
+    sch_no_title:'Masukkan judul jadwal.',
+    sch_no_start:'Masukkan tanggal mulai.',
+    sch_load_fail:'Gagal memuat jadwal: ',
+    sch_btn_today:'Hari Ini',
+    sch_dow:['Min','Sen','Sel','Rab','Kam','Jum','Sab'],
+    sch_month_label:'{m} {y}',
+    greet_morning_ph:'Selamat pagi',
+    greet_noon_ph:'Selamat makan siang',
+    greet_afternoon_ph:'Selamat sore',
+    greet_evening_ph:'Selamat petang',
+    greet_night_ph:'Selamat malam',
+    btn_cancel:'Batal',
+    sch_more:'+{n} lagi',
+    video_uploading:'Mengunggah video...',
+    file_uploading:'Mengunggah file {i}/{total}...',
+    file_download:'MB · Klik untuk unduh',
+    storage_no_perm:'Tidak ada izin Firebase Storage. Periksa aturan di Console.',
+    storage_fail:'Gagal unggah Storage: ',
+    pwa_guide:'Gunakan menu browser → "Tambah ke layar utama" 📲',
+    video_mb_range:'Masukkan antara 1~100MB.',
     greeting_settings_title:'Pengaturan Salam Waktu',
     greeting_settings_desc:'Atur pesan sambutan berdasarkan waktu. Kosongkan untuk menggunakan teks default.',
     greeting_label_morning:'Subuh/Pagi (05:00~11:59)',
@@ -1013,7 +1080,6 @@ id:{
     modal_pw_ph2:'Masukkan ulang',
     modal_pw_confirm:'Konfirmasi Kata Sandi',
     modal_pw_change_btn:'Ganti',
-    btn_cancel:'Batal',
     col_pw_change:'Ganti Kata Sandi',
     summary_today:'Status Karyawan Hari Ini',
     diary_write_label:'Tulis Laporan Kerja Hari Ini',
@@ -1081,12 +1147,43 @@ window.setLang = function(lang) {
     document.getElementById('lang-ko').classList.toggle('active', lang==='ko');
     document.getElementById('lang-id').classList.toggle('active', lang==='id');
     applyI18n();
-    if (currentUser) {
-        updateTodayStatus(); updateBtnState(); applyFilter(); applyOTFilter();
-        showGreetingCard();
-        if (isAdmin) { renderUsers(); updateOTLabel(); updateVideoLabel(); renderSummary(); }
-        applyDiaryFilter();
+    if (!currentUser) return;
+
+    // 공통 갱신
+    updateTodayStatus(); updateBtnState(); applyFilter(); applyOTFilter();
+    showGreetingCard();
+
+    // 관리자 전용 갱신
+    if (isAdmin) { updateOTLabel(); updateVideoLabel(); }
+
+    // ── 현재 보고 있는 탭에 맞춰 즉시 렌더 ──
+    switch (currentPanel) {
+        case 'records':
+            applyFilter();
+            break;
+        case 'summary':
+            renderSummary();
+            break;
+        case 'overtime':
+            applyOTFilter();
+            break;
+        case 'diary':
+            applyDiaryFilter();
+            break;
+        case 'schedule':
+            renderCalendar();
+            break;
+        case 'users':
+            if (isAdmin) renderUsers();
+            break;
+        case 'settings':
+            // 설정 탭은 data-i18n으로 처리되므로 applyI18n()으로 충분
+            break;
     }
+
+    // 현재 탭과 무관하게 백그라운드도 갱신
+    applyDiaryFilter();
+    if (isAdmin) renderUsers();
 };
 function applyI18n() {
     document.querySelectorAll('[data-i18n]').forEach(el => el.innerText = t(el.getAttribute('data-i18n')));
@@ -1456,7 +1553,7 @@ window.saveOTSettings = async function() {
 window.saveVideoSettings = async function() {
     if (!isAdmin) return;
     const mb = parseInt(document.getElementById('video-max-mb').value) || 30;
-    if (mb < 1 || mb > 100) return toast('1~100MB 사이로 입력하세요.', true);
+    if (mb < 1 || mb > 100) return toast(t('video_mb_range'), true);
     try {
         // OT 설정 문서에 함께 저장
         const snap = await getDoc(doc(db, SCOL, OT_DOC));
@@ -1775,7 +1872,7 @@ window.doInstall = async function() {
     } else {
         // iOS or 이미 설치됨
         toast(currentLang === 'ko'
-            ? '브라우저 메뉴 → "홈 화면에 추가"를 이용하세요 📲'
+            ? t('pwa_guide')
             : 'Gunakan menu browser → "Tambah ke layar utama" 📲');
     }
 };
@@ -1964,7 +2061,7 @@ window.submitDiary = async function() {
             const storageRef = ref(storage, storePath);
 
             // 진행률 표시 업데이트
-            setBtnLoad('btn-diary-submit', true, '동영상 업로드 중...');
+            setBtnLoad('btn-diary-submit', true, t('video_uploading'));
 
             try {
                 await new Promise((resolve, reject) => {
@@ -1984,8 +2081,8 @@ window.submitDiary = async function() {
             } catch(storageErr) {
                 // Storage 실패 시 명확한 에러 메시지
                 const msg = storageErr.code === 'storage/unauthorized'
-                    ? 'Firebase Storage 권한이 없습니다. Console에서 규칙을 확인하세요.'
-                    : 'Storage 업로드 실패: ' + storageErr.message;
+                    ? t('storage_no_perm')
+                    : t('storage_fail') + storageErr.message;
                 throw new Error(msg);
             }
         }
@@ -1998,7 +2095,7 @@ window.submitDiary = async function() {
             for (let i = 0; i < diaryPendingDocs.length; i++) {
                 const d = diaryPendingDocs[i];
                 const btn = document.getElementById('btn-diary-submit');
-                if (btn) btn.innerHTML = '<span class="spinner"></span> 파일 ' + (i+1) + '/' + diaryPendingDocs.length + ' 업로드 중...';
+                if (btn) btn.innerHTML = '<span class="spinner"></span> ' + t('file_uploading').replace('{i}', i+1).replace('{total}', diaryPendingDocs.length);
                 const safeName   = d.name.replace(/[^a-zA-Z0-9._-]/g, '_');
                 const storePath  = 'diary_docs/' + currentUser.id + '_' + Date.now() + '_' + safeName;
                 const storageRef = ref(storage, storePath);
@@ -2104,7 +2201,7 @@ function renderDiary(entries) {
                 '<a href="' + d.url + '" target="_blank" rel="noopener" class="diary-doc-card">' +
                 '<span style="font-size:20px;flex-shrink:0">' + getDocIcon(d.ext) + '</span>' +
                 '<div><div class="diary-doc-card-name">' + d.name + '</div>' +
-                '<div class="diary-doc-card-meta">' + d.sizeMb + 'MB · 클릭하여 다운로드</div></div>' +
+                '<div class="diary-doc-card-meta">' + d.sizeMb + t('file_download') + '</div></div>' +
                 '</a>'
               ).join('') + '</div>'
             : '';
@@ -2338,7 +2435,7 @@ function showGreetingCard() {
         <div class="greeting-text">
             <div class="greeting-top">${timeStr}</div>
             <div class="greeting-main">${currentLang === 'ko'
-                ? `안녕하세요! <strong>${name}</strong>님, ${label}`
+                ? `${currentLang === 'ko' ? '안녕하세요! ' : 'Halo, '}<strong>${name}</strong>${currentLang === 'ko' ? '님, ' : '! '}${label}`
                 : `Halo, <strong>${name}</strong>! ${label}`}</div>
             <div class="greeting-sub">${sub}</div>
         </div>`;
@@ -2380,14 +2477,25 @@ function startScheduleListener() {
     unsubSchedules = onSnapshot(q, snap => {
         allSchedules = snap.docs.map(d => ({id: d.id, ...d.data()}));
         if (currentPanel === 'schedule') renderCalendar();
-    }, e => toast('일정 로드 실패: ' + e.message, true));
+    }, e => toast(t('sch_load_fail') + e.message, true));
 }
 
 // ── 캘린더 렌더링 ──
 function renderCalendar() {
     const label = document.getElementById('cal-month-label');
     if (!label) return;
-    label.innerText = calYear + '년 ' + (calMonth + 1) + '월';
+    // 월 레이블 — 언어별 포맷
+    const monthLabel = t('sch_month_label')
+        .replace('{y}', calYear)
+        .replace('{m}', calMonth + 1);
+    label.innerText = monthLabel;
+
+    // 요일 헤더 갱신 (언어 전환 대응)
+    const dows = STRINGS[currentLang].sch_dow || STRINGS.ko.sch_dow;
+    dows.forEach((name, i) => {
+        const el = document.getElementById('cal-dow-' + i);
+        if (el) el.innerText = name;
+    });
 
     const grid   = document.getElementById('cal-grid');
     const today  = todayStr();
@@ -2449,7 +2557,7 @@ function makeDayCell(y, m, d, otherMonth) {
     if (more > 0) {
         const m2 = document.createElement('div');
         m2.className = 'cal-more';
-        m2.innerText = '+' + more + '개';
+        m2.innerText = t('sch_more').replace('{n}', more);
         cell.appendChild(m2);
     }
     return cell;
@@ -2461,7 +2569,7 @@ function renderDayList(dateStr) {
     const list  = document.getElementById('sch-day-list');
     if (!label || !list) return;
     const isToday = dateStr === todayStr();
-    label.innerText = isToday ? '오늘 일정' : dateStr + ' 일정';
+    label.innerText = isToday ? t('sch_today_label') : dateStr + t('sch_day_suffix');
 
     const events = allSchedules.filter(s => s.startDate <= dateStr && (s.endDate || s.startDate) >= dateStr);
     if (!events.length) {
@@ -2490,7 +2598,7 @@ function renderUpcoming() {
 
 // ── 일정 아이템 DOM 생성 ──
 function makeSchItem(ev) {
-    const catName = {work:'업무', meeting:'회의', personal:'개인', holiday:'휴일', etc:'기타'}[ev.category] || ev.category;
+    const catName = {work:t('sch_cat_work'), meeting:t('sch_cat_meeting'), personal:t('sch_cat_personal'), holiday:t('sch_cat_holiday'), etc:t('sch_cat_etc')}[ev.category] || ev.category;
     const timeStr = ev.timeStart ? (ev.timeStart + (ev.timeEnd ? ' ~ ' + ev.timeEnd : '')) : t('sch_allday');
     const dateRange = ev.endDate && ev.endDate !== ev.startDate
         ? ev.startDate + ' ~ ' + ev.endDate
@@ -2498,17 +2606,46 @@ function makeSchItem(ev) {
 
     const item = document.createElement('div');
     item.className = 'schedule-item';
-    item.innerHTML =
-        '<div class="schedule-item-bar cat-' + (ev.category || 'etc') + '"></div>' +
-        '<div class="schedule-item-body">' +
-            '<div class="schedule-item-title">' + escapeHtml(ev.title || '') + '</div>' +
-            '<div class="schedule-item-meta">' + dateRange + ' · ' + timeStr + ' · ' + catName + (ev.author ? ' · ' + ev.author : '') + '</div>' +
-            (ev.desc ? '<div class="schedule-item-desc">' + escapeHtml(ev.desc) + '</div>' : '') +
-        '</div>' +
-        '<div class="schedule-item-actions">' +
-            '<button class="sch-btn" onclick="openSchModalById(\'' + ev.id + \'\')">✏️</button>' +
-            '<button class="sch-btn del" onclick="deleteSchedule('' + ev.id + '')">✕</button>' +
-        '</div>';
+
+    // 색상 바
+    const bar = document.createElement('div');
+    bar.className = 'schedule-item-bar cat-' + (ev.category || 'etc');
+    item.appendChild(bar);
+
+    // 본문
+    const body = document.createElement('div');
+    body.className = 'schedule-item-body';
+    const titleEl = document.createElement('div');
+    titleEl.className = 'schedule-item-title';
+    titleEl.textContent = ev.title || '';
+    body.appendChild(titleEl);
+    const metaEl = document.createElement('div');
+    metaEl.className = 'schedule-item-meta';
+    metaEl.textContent = dateRange + ' · ' + timeStr + ' · ' + catName + (ev.author ? ' · ' + ev.author : '');
+    body.appendChild(metaEl);
+    if (ev.desc) {
+        const descEl = document.createElement('div');
+        descEl.className = 'schedule-item-desc';
+        descEl.textContent = ev.desc;
+        body.appendChild(descEl);
+    }
+    item.appendChild(body);
+
+    // 버튼
+    const actions = document.createElement('div');
+    actions.className = 'schedule-item-actions';
+    const editBtn = document.createElement('button');
+    editBtn.className = 'sch-btn';
+    editBtn.textContent = '✏️';
+    editBtn.onclick = function() { openSchModalById(ev.id); };
+    const delBtn = document.createElement('button');
+    delBtn.className = 'sch-btn del';
+    delBtn.textContent = '✕';
+    delBtn.onclick = function() { deleteSchedule(ev.id); };
+    actions.appendChild(editBtn);
+    actions.appendChild(delBtn);
+    item.appendChild(actions);
+
     return item;
 }
 
@@ -2558,8 +2695,8 @@ window.saveSchedule = async function() {
     const title = document.getElementById('sch-title').value.trim();
     const start = document.getElementById('sch-start').value;
     const end   = document.getElementById('sch-end').value;
-    if (!title) return toast('제목을 입력하세요.', true);
-    if (!start) return toast('시작일을 입력하세요.', true);
+    if (!title) return toast(t('sch_no_title'), true);
+    if (!start) return toast(t('sch_no_start'), true);
 
     const data = {
         title,
