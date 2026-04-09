@@ -198,6 +198,71 @@
         .photo-viewer img{max-width:95vw;max-height:90vh;border-radius:8px;object-fit:contain}
         .photo-viewer-close{position:fixed;top:16px;right:20px;color:white;font-size:30px;cursor:pointer;background:none;border:none}
         .diary-empty{text-align:center;color:var(--text-hint);padding:28px 0;font-size:13px}
+        /* ── 일정 관리 ── */
+        .schedule-toolbar{display:flex;align-items:center;gap:8px;margin-bottom:14px;flex-wrap:wrap}
+        .schedule-month-nav{display:flex;align-items:center;gap:8px}
+        .month-nav-btn{background:transparent;border:1px solid var(--border);border-radius:var(--radius-sm);padding:6px 10px;cursor:pointer;font-size:14px;color:var(--text-secondary);transition:background .15s}
+        .month-nav-btn:hover{background:var(--bg)}
+        .month-label{font-size:15px;font-weight:700;color:var(--text-primary);min-width:120px;text-align:center}
+        .schedule-today-btn{padding:6px 12px;border:1px solid var(--blue);border-radius:var(--radius-sm);background:transparent;color:var(--blue);font-size:12px;font-weight:600;cursor:pointer;font-family:'Noto Sans KR',sans-serif}
+        .schedule-today-btn:hover{background:var(--blue-light)}
+        .btn-add-schedule{margin-left:auto;padding:7px 14px;background:var(--blue);color:white;border:none;border-radius:var(--radius-sm);font-size:13px;font-weight:700;cursor:pointer;font-family:'Noto Sans KR',sans-serif}
+        .btn-add-schedule:hover{opacity:.88}
+
+        /* 캘린더 그리드 */
+        .cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:var(--radius-sm);overflow:hidden;margin-bottom:16px}
+        .cal-header{background:#f8f9fa;text-align:center;padding:6px 2px;font-size:11px;font-weight:700;color:var(--text-secondary);letter-spacing:.03em}
+        .cal-header.sun{color:#d93025}
+        .cal-header.sat{color:#1a73e8}
+        .cal-day{background:var(--surface);min-height:72px;padding:4px;position:relative;cursor:pointer;transition:background .1s}
+        .cal-day:hover{background:#f5f8ff}
+        .cal-day.other-month{background:#fafafa}
+        .cal-day.other-month .cal-day-num{color:var(--text-hint)}
+        .cal-day.today{background:#eef4ff}
+        .cal-day.today .cal-day-num{background:var(--blue);color:white;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center}
+        .cal-day.selected{outline:2px solid var(--blue);outline-offset:-2px}
+        .cal-day-num{font-size:12px;font-weight:600;color:var(--text-primary);margin-bottom:2px;width:22px;height:22px;display:flex;align-items:center;justify-content:center}
+        .cal-day-num.sun{color:#d93025}
+        .cal-day-num.sat{color:#1a73e8}
+        .cal-event-dot{font-size:10px;line-height:1.4;padding:1px 3px;border-radius:3px;margin-bottom:1px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;cursor:pointer}
+        .cal-event-dot.cat-work    {background:#dbeafe;color:#1e3a5f}
+        .cal-event-dot.cat-personal{background:#e6f4ec;color:#085041}
+        .cal-event-dot.cat-meeting {background:#faeeda;color:#633806}
+        .cal-event-dot.cat-holiday {background:#fce8e6;color:#a32d2d}
+        .cal-event-dot.cat-etc     {background:#f3f4f6;color:#444}
+        .cal-more{font-size:10px;color:var(--text-hint);padding-left:3px}
+
+        /* 일정 목록 (선택된 날) */
+        .schedule-list-header{font-size:12px;font-weight:700;color:var(--text-hint);letter-spacing:.05em;text-transform:uppercase;margin-bottom:10px}
+        .schedule-item{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px 14px;margin-bottom:8px;display:flex;align-items:flex-start;gap:12px;position:relative}
+        .schedule-item-bar{width:4px;border-radius:2px;align-self:stretch;flex-shrink:0}
+        .schedule-item-bar.cat-work    {background:#378add}
+        .schedule-item-bar.cat-personal{background:#1d9e75}
+        .schedule-item-bar.cat-meeting {background:#ba7517}
+        .schedule-item-bar.cat-holiday {background:#e24b4a}
+        .schedule-item-bar.cat-etc     {background:#888780}
+        .schedule-item-body{flex:1;min-width:0}
+        .schedule-item-title{font-size:14px;font-weight:600;color:var(--text-primary);margin-bottom:3px}
+        .schedule-item-meta{font-size:12px;color:var(--text-secondary)}
+        .schedule-item-desc{font-size:12px;color:var(--text-secondary);margin-top:4px;line-height:1.5}
+        .schedule-item-actions{display:flex;gap:4px;flex-shrink:0}
+        .sch-btn{background:transparent;border:none;cursor:pointer;color:var(--text-hint);font-size:13px;padding:3px 6px;border-radius:4px}
+        .sch-btn:hover{color:var(--blue);background:var(--blue-light)}
+        .sch-btn.del:hover{color:var(--red);background:var(--red-light)}
+        .schedule-empty{text-align:center;color:var(--text-hint);padding:24px 0;font-size:13px}
+
+        /* 일정 모달 */
+        .sch-modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:200;display:flex;align-items:center;justify-content:center;padding:16px}
+        .sch-modal{background:var(--surface);border-radius:var(--radius);padding:22px;width:100%;max-width:420px;box-shadow:0 8px 32px rgba(0,0,0,0.2)}
+        .sch-modal-title{font-size:16px;font-weight:700;margin-bottom:16px;color:var(--text-primary)}
+        .sch-field-row{display:flex;gap:8px}
+        .sch-field-row .field{flex:1}
+        .cat-select{width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:var(--radius-sm);font-size:14px;font-family:'Noto Sans KR',sans-serif;color:var(--text-primary);background:#fafafa;outline:none;margin-bottom:12px}
+        .cat-select:focus{border-color:var(--blue)}
+        .sch-actions{display:flex;gap:8px;margin-top:4px}
+        .sch-actions .btn{flex:1;padding:11px}
+        .sch-all-header{font-size:12px;font-weight:700;color:var(--text-hint);letter-spacing:.05em;text-transform:uppercase;margin:16px 0 8px}
+
         .diary-doc-preview{position:relative;display:inline-flex;align-items:center;gap:8px;background:#f8f9fa;border:1px solid var(--border);border-radius:8px;padding:8px 10px;flex-shrink:0;max-width:180px}
         .diary-doc-icon{font-size:22px;flex-shrink:0;line-height:1}
         .diary-doc-info{min-width:0}
@@ -364,6 +429,8 @@
         <button class="panel-tab"        onclick="switchPanel('summary')"  data-i18n="tab_summary">직원 현황</button>
         <button class="panel-tab"        onclick="switchPanel('overtime')" data-i18n="tab_overtime">야근 기록</button>
         <button class="panel-tab"        onclick="switchPanel('diary')"    data-i18n="tab_diary">업무 일지</button>
+        <button class="panel-tab"        onclick="switchPanel('schedule')" data-i18n="tab_schedule">일정</button>
+        <button class="panel-tab"        onclick="switchPanel('schedule')" data-i18n="tab_schedule">일정</button>
         <button class="panel-tab"        onclick="switchPanel('users')"    data-i18n="tab_users">회원 관리</button>
         <button class="panel-tab"        onclick="switchPanel('settings')" data-i18n="tab_settings">설정</button>
     </div>
@@ -537,6 +604,87 @@
     </div>
 
 
+
+    <!-- ⑥ 일정 관리 -->
+    <div id="panel-schedule" class="hidden">
+
+        <!-- 툴바 -->
+        <div class="schedule-toolbar">
+            <div class="schedule-month-nav">
+                <button class="month-nav-btn" onclick="calMove(-1)">&#8249;</button>
+                <div class="month-label" id="cal-month-label"></div>
+                <button class="month-nav-btn" onclick="calMove(1)">&#8250;</button>
+            </div>
+            <button class="schedule-today-btn" onclick="calToday()">오늘</button>
+            <button class="btn-add-schedule" onclick="openSchModal(null)">+ 일정 추가</button>
+        </div>
+
+        <!-- 캘린더 그리드 -->
+        <div class="cal-grid" id="cal-grid">
+            <div class="cal-header sun">일</div>
+            <div class="cal-header">월</div>
+            <div class="cal-header">화</div>
+            <div class="cal-header">수</div>
+            <div class="cal-header">목</div>
+            <div class="cal-header">금</div>
+            <div class="cal-header sat">토</div>
+        </div>
+
+        <!-- 선택한 날 일정 목록 -->
+        <div class="schedule-list-header" id="sch-day-label">오늘 일정</div>
+        <div id="sch-day-list"></div>
+
+        <!-- 다가오는 일정 -->
+        <div class="sch-all-header">다가오는 일정</div>
+        <div id="sch-upcoming-list"></div>
+
+    </div>
+
+    <!-- 일정 추가/수정 모달 -->
+    <div id="sch-modal" class="sch-modal-overlay hidden" onclick="if(event.target===this)closeSchModal()">
+        <div class="sch-modal">
+            <div class="sch-modal-title" id="sch-modal-title">일정 추가</div>
+            <label class="field-label">제목</label>
+            <input class="field" type="text" id="sch-title" placeholder="일정 제목">
+            <div class="sch-field-row">
+                <div style="flex:1">
+                    <label class="field-label">시작일</label>
+                    <input class="field" type="date" id="sch-start">
+                </div>
+                <div style="flex:1">
+                    <label class="field-label">종료일</label>
+                    <input class="field" type="date" id="sch-end">
+                </div>
+            </div>
+            <div class="sch-field-row">
+                <div style="flex:1">
+                    <label class="field-label">시작 시간 (선택)</label>
+                    <input class="field" type="time" id="sch-time-start" style="margin-bottom:12px">
+                </div>
+                <div style="flex:1">
+                    <label class="field-label">종료 시간 (선택)</label>
+                    <input class="field" type="time" id="sch-time-end" style="margin-bottom:12px">
+                </div>
+            </div>
+            <label class="field-label">카테고리</label>
+            <select class="cat-select" id="sch-cat">
+                <option value="work">업무</option>
+                <option value="meeting">회의</option>
+                <option value="personal">개인</option>
+                <option value="holiday">휴일/공휴일</option>
+                <option value="etc">기타</option>
+            </select>
+            <label class="field-label">메모 (선택)</label>
+            <input class="field" type="text" id="sch-desc" placeholder="추가 메모" style="margin-bottom:12px">
+            <label class="field-label">작성자</label>
+            <input class="field" type="text" id="sch-author" placeholder="" readonly style="background:#f5f5f5;margin-bottom:12px">
+            <div class="sch-actions">
+                <button class="btn btn-ghost" onclick="closeSchModal()">취소</button>
+                <button class="btn btn-blue"  onclick="saveSchedule()" id="btn-sch-save">저장</button>
+            </div>
+        </div>
+    </div>
+
     <!-- ⑤ 업무 일지 -->
     <div id="panel-diary" class="hidden">
 
@@ -661,6 +809,15 @@ ko:{
     t_summary_no_user:'등록된 직원이 없습니다.',
     btn_pw_change:'비밀번호 변경',
     tab_diary:'업무 일지',
+    tab_schedule:'일정',
+    sch_cat_work:'업무', sch_cat_meeting:'회의', sch_cat_personal:'개인',
+    sch_cat_holiday:'휴일', sch_cat_etc:'기타',
+    sch_add:'일정 추가', sch_edit:'일정 수정',
+    sch_save_done:'일정이 저장되었습니다.', sch_save_fail:'저장 실패: ',
+    sch_del_confirm:'이 일정을 삭제하시겠습니까?', sch_del_done:'삭제되었습니다.',
+    sch_del_fail:'삭제 실패: ', sch_no_event:'일정이 없습니다.',
+    sch_upcoming_none:'다가오는 일정이 없습니다.',
+    sch_allday:'종일',
     greeting_settings_title:'시간대별 인사말 설정',
     greeting_settings_desc:'시간대별로 표시할 인사말을 설정하세요. 비워두면 기본 문구가 사용됩니다.',
     greeting_label_morning:'새벽/아침 (05:00~11:59)',
@@ -800,6 +957,15 @@ id:{
     t_summary_no_user:'Belum ada pegawai terdaftar.',
     btn_pw_change:'Ubah',
     tab_diary:'Jurnal Kerja',
+    tab_schedule:'Jadwal',
+    sch_cat_work:'Kerja', sch_cat_meeting:'Rapat', sch_cat_personal:'Pribadi',
+    sch_cat_holiday:'Libur', sch_cat_etc:'Lainnya',
+    sch_add:'Tambah Jadwal', sch_edit:'Edit Jadwal',
+    sch_save_done:'Jadwal berhasil disimpan.', sch_save_fail:'Gagal menyimpan: ',
+    sch_del_confirm:'Hapus jadwal ini?', sch_del_done:'Berhasil dihapus.',
+    sch_del_fail:'Gagal menghapus: ', sch_no_event:'Tidak ada jadwal.',
+    sch_upcoming_none:'Tidak ada jadwal mendatang.',
+    sch_allday:'Sepanjang hari',
     greeting_settings_title:'Pengaturan Salam Waktu',
     greeting_settings_desc:'Atur pesan sambutan berdasarkan waktu. Kosongkan untuk menggunakan teks default.',
     greeting_label_morning:'Subuh/Pagi (05:00~11:59)',
@@ -885,11 +1051,14 @@ const firebaseConfig = {
 const app     = initializeApp(firebaseConfig);
 const db      = getFirestore(app);
 const storage = getStorage(app);
-const UCOL = "users", ACOL = "attendance_records", SCOL = "settings", OT_DOC = "overtime_config", DCOL = "diary";
+const UCOL = "users", ACOL = "attendance_records", SCOL = "settings", OT_DOC = "overtime_config", DCOL = "diary", ECOL = "schedules";
 
 let currentUser = null, isAdmin = false;
-let allLogs = [], allUsers = [], allDiary = [];
-let unsubLogs = null, unsubUsers = null, unsubDiary = null;
+let allLogs = [], allUsers = [], allDiary = [], allSchedules = [];
+let unsubLogs = null, unsubUsers = null, unsubDiary = null, unsubSchedules = null;
+let calYear = new Date().getFullYear(), calMonth = new Date().getMonth();
+let calSelectedDate = new Date().toISOString().slice(0,10);
+let editingSchId = null;
 let diaryPendingPhotos = [];
 let diaryPendingVideo = null; // {file, name, previewUrl, sizeMb}
 let diaryPendingDocs  = [];   // [{file, name, sizeMb, ext}]
@@ -1034,6 +1203,7 @@ function enterApp() {
     showGreetingCardOnEnter();
     startLogsListener();
     startDiaryListener();
+    startScheduleListener();
     if (isAdmin) startUsersListener();
     if (isAdmin) document.getElementById('diary-admin-note').classList.remove('hidden');
 }
@@ -1053,6 +1223,7 @@ window.doLogout = function() {
     if (unsubLogs)  unsubLogs();
     if (unsubUsers) unsubUsers();
     if (unsubDiary) unsubDiary();
+    if (unsubSchedules) unsubSchedules();
     location.reload();
 };
 
@@ -1061,17 +1232,18 @@ window.doLogout = function() {
 // ═══════════════════════════════════════════
 window.switchPanel = function(panel) {
     currentPanel = panel;
-    ['records','summary','overtime','diary','users','settings'].forEach(p => {
+    ['records','summary','overtime','diary','schedule','users','settings'].forEach(p => {
         const el = document.getElementById('panel-'+p);
         if (el) el.classList.toggle('hidden', p !== panel);
     });
     document.querySelectorAll('.panel-tab').forEach(btn => {
-        const map = {tab_records:'records',tab_overtime:'overtime',tab_diary:'diary',tab_users:'users',tab_settings:'settings',tab_summary:'summary'};
+        const map = {tab_records:'records',tab_overtime:'overtime',tab_diary:'diary',tab_schedule:'schedule',tab_users:'users',tab_settings:'settings',tab_summary:'summary'};
         btn.classList.toggle('active', map[btn.getAttribute('data-i18n')] === panel);
     });
     if (panel === 'overtime') applyOTFilter();
     if (panel === 'summary') renderSummary();
     if (panel === 'diary') applyDiaryFilter();
+    if (panel === 'schedule') renderCalendar();
 };
 
 // ═══════════════════════════════════════════
@@ -2195,6 +2367,234 @@ window.saveGreetingSettings = async function() {
         showGreetingCard();
         toast(t('greeting_saved'));
     } catch(e) { toast(t('greeting_save_fail') + e.message, true); }
+};
+
+
+// ═══════════════════════════════════════════
+//  일정 관리
+// ═══════════════════════════════════════════
+
+// 실시간 리스너
+function startScheduleListener() {
+    const q = query(collection(db, ECOL), orderBy('startDate', 'asc'));
+    unsubSchedules = onSnapshot(q, snap => {
+        allSchedules = snap.docs.map(d => ({id: d.id, ...d.data()}));
+        if (currentPanel === 'schedule') renderCalendar();
+    }, e => toast('일정 로드 실패: ' + e.message, true));
+}
+
+// ── 캘린더 렌더링 ──
+function renderCalendar() {
+    const label = document.getElementById('cal-month-label');
+    if (!label) return;
+    label.innerText = calYear + '년 ' + (calMonth + 1) + '월';
+
+    const grid   = document.getElementById('cal-grid');
+    const today  = todayStr();
+    // 헤더 7개 유지하고 날짜 셀만 재생성
+    const headers = Array.from(grid.querySelectorAll('.cal-header'));
+    grid.innerHTML = '';
+    headers.forEach(h => grid.appendChild(h));
+
+    const firstDay = new Date(calYear, calMonth, 1).getDay(); // 0=일
+    const lastDate  = new Date(calYear, calMonth + 1, 0).getDate();
+    const prevLast  = new Date(calYear, calMonth, 0).getDate();
+
+    // 이전 달 채우기
+    for (let i = firstDay - 1; i >= 0; i--) {
+        grid.appendChild(makeDayCell(calYear, calMonth - 1, prevLast - i, true));
+    }
+    // 이번 달
+    for (let d = 1; d <= lastDate; d++) {
+        grid.appendChild(makeDayCell(calYear, calMonth, d, false));
+    }
+    // 다음 달 채우기
+    const total = firstDay + lastDate;
+    const rem   = total % 7 === 0 ? 0 : 7 - (total % 7);
+    for (let d = 1; d <= rem; d++) {
+        grid.appendChild(makeDayCell(calYear, calMonth + 1, d, true));
+    }
+
+    renderDayList(calSelectedDate);
+    renderUpcoming();
+}
+
+function makeDayCell(y, m, d, otherMonth) {
+    // 실제 날짜 계산 (월 오버플로 처리)
+    const date    = new Date(y, m, d);
+    const dateStr = date.toISOString().slice(0, 10);
+    const dow     = date.getDay();
+    const todayStr2 = todayStr();
+
+    const cell = document.createElement('div');
+    cell.className = 'cal-day' + (otherMonth ? ' other-month' : '') + (dateStr === todayStr2 ? ' today' : '') + (dateStr === calSelectedDate ? ' selected' : '');
+    cell.onclick = () => { calSelectedDate = dateStr; renderCalendar(); };
+
+    const numEl = document.createElement('div');
+    numEl.className = 'cal-day-num' + (dow === 0 ? ' sun' : dow === 6 ? ' sat' : '');
+    numEl.innerText = d;
+    cell.appendChild(numEl);
+
+    // 이 날짜에 걸친 일정
+    const events = allSchedules.filter(s => s.startDate <= dateStr && (s.endDate || s.startDate) >= dateStr);
+    const show   = events.slice(0, 2);
+    const more   = events.length - show.length;
+    show.forEach(ev => {
+        const dot = document.createElement('div');
+        dot.className = 'cal-event-dot cat-' + (ev.category || 'etc');
+        dot.innerText = ev.title || '';
+        dot.onclick = e => { e.stopPropagation(); openSchModalById(ev.id); };
+        cell.appendChild(dot);
+    });
+    if (more > 0) {
+        const m2 = document.createElement('div');
+        m2.className = 'cal-more';
+        m2.innerText = '+' + more + '개';
+        cell.appendChild(m2);
+    }
+    return cell;
+}
+
+// ── 선택한 날 일정 목록 ──
+function renderDayList(dateStr) {
+    const label = document.getElementById('sch-day-label');
+    const list  = document.getElementById('sch-day-list');
+    if (!label || !list) return;
+    const isToday = dateStr === todayStr();
+    label.innerText = isToday ? '오늘 일정' : dateStr + ' 일정';
+
+    const events = allSchedules.filter(s => s.startDate <= dateStr && (s.endDate || s.startDate) >= dateStr);
+    if (!events.length) {
+        list.innerHTML = '<div class="schedule-empty">' + t('sch_no_event') + '</div>';
+        return;
+    }
+    list.innerHTML = '';
+    events.forEach(ev => list.appendChild(makeSchItem(ev)));
+}
+
+// ── 다가오는 일정 ──
+function renderUpcoming() {
+    const list  = document.getElementById('sch-upcoming-list');
+    if (!list) return;
+    const today2 = todayStr();
+    const upcoming = allSchedules
+        .filter(s => s.startDate > today2)
+        .slice(0, 5);
+    if (!upcoming.length) {
+        list.innerHTML = '<div class="schedule-empty">' + t('sch_upcoming_none') + '</div>';
+        return;
+    }
+    list.innerHTML = '';
+    upcoming.forEach(ev => list.appendChild(makeSchItem(ev)));
+}
+
+// ── 일정 아이템 DOM 생성 ──
+function makeSchItem(ev) {
+    const catName = {work:'업무', meeting:'회의', personal:'개인', holiday:'휴일', etc:'기타'}[ev.category] || ev.category;
+    const timeStr = ev.timeStart ? (ev.timeStart + (ev.timeEnd ? ' ~ ' + ev.timeEnd : '')) : t('sch_allday');
+    const dateRange = ev.endDate && ev.endDate !== ev.startDate
+        ? ev.startDate + ' ~ ' + ev.endDate
+        : ev.startDate;
+
+    const item = document.createElement('div');
+    item.className = 'schedule-item';
+    item.innerHTML =
+        '<div class="schedule-item-bar cat-' + (ev.category || 'etc') + '"></div>' +
+        '<div class="schedule-item-body">' +
+            '<div class="schedule-item-title">' + escapeHtml(ev.title || '') + '</div>' +
+            '<div class="schedule-item-meta">' + dateRange + ' · ' + timeStr + ' · ' + catName + (ev.author ? ' · ' + ev.author : '') + '</div>' +
+            (ev.desc ? '<div class="schedule-item-desc">' + escapeHtml(ev.desc) + '</div>' : '') +
+        '</div>' +
+        '<div class="schedule-item-actions">' +
+            '<button class="sch-btn" onclick="openSchModalById(\'' + ev.id + \'\')">✏️</button>' +
+            '<button class="sch-btn del" onclick="deleteSchedule('' + ev.id + '')">✕</button>' +
+        '</div>';
+    return item;
+}
+
+// ── 월 이동 ──
+window.calMove = function(dir) {
+    calMonth += dir;
+    if (calMonth > 11) { calMonth = 0;  calYear++; }
+    if (calMonth < 0)  { calMonth = 11; calYear--; }
+    renderCalendar();
+};
+window.calToday = function() {
+    const now = new Date();
+    calYear  = now.getFullYear();
+    calMonth = now.getMonth();
+    calSelectedDate = todayStr();
+    renderCalendar();
+};
+
+// ── id로 모달 열기 (캘린더/버튼용) ──
+window.openSchModalById = function(id) {
+    const ev = id ? allSchedules.find(s => s.id === id) : null;
+    window.openSchModal(ev || null);
+};
+
+// ── 모달 열기 ──
+window.openSchModal = function(ev) {
+    editingSchId = ev ? ev.id : null;
+    document.getElementById('sch-modal-title').innerText = ev ? t('sch_edit') : t('sch_add');
+    document.getElementById('sch-title').value      = ev ? (ev.title || '') : '';
+    document.getElementById('sch-start').value      = ev ? (ev.startDate || calSelectedDate) : calSelectedDate;
+    document.getElementById('sch-end').value        = ev ? (ev.endDate   || ev.startDate || calSelectedDate) : calSelectedDate;
+    document.getElementById('sch-time-start').value = ev ? (ev.timeStart || '') : '';
+    document.getElementById('sch-time-end').value   = ev ? (ev.timeEnd   || '') : '';
+    document.getElementById('sch-cat').value        = ev ? (ev.category  || 'work') : 'work';
+    document.getElementById('sch-desc').value       = ev ? (ev.desc      || '') : '';
+    document.getElementById('sch-author').value     = currentUser?.id || '';
+    document.getElementById('sch-modal').classList.remove('hidden');
+    setTimeout(() => document.getElementById('sch-title').focus(), 50);
+};
+window.closeSchModal = function() {
+    document.getElementById('sch-modal').classList.add('hidden');
+    editingSchId = null;
+};
+
+// ── 일정 저장 ──
+window.saveSchedule = async function() {
+    const title = document.getElementById('sch-title').value.trim();
+    const start = document.getElementById('sch-start').value;
+    const end   = document.getElementById('sch-end').value;
+    if (!title) return toast('제목을 입력하세요.', true);
+    if (!start) return toast('시작일을 입력하세요.', true);
+
+    const data = {
+        title,
+        startDate:  start,
+        endDate:    end || start,
+        timeStart:  document.getElementById('sch-time-start').value || null,
+        timeEnd:    document.getElementById('sch-time-end').value   || null,
+        category:   document.getElementById('sch-cat').value,
+        desc:       document.getElementById('sch-desc').value.trim() || null,
+        author:     currentUser?.id || '',
+        updatedAt:  serverTimestamp()
+    };
+
+    const saveBtn = document.getElementById('btn-sch-save');
+    saveBtn.disabled = true;
+    try {
+        if (editingSchId) {
+            await updateDoc(doc(db, ECOL, editingSchId), data);
+        } else {
+            data.createdAt = serverTimestamp();
+            await addDoc(collection(db, ECOL), data);
+        }
+        toast(t('sch_save_done'));
+        closeSchModal();
+    } catch(e) { toast(t('sch_save_fail') + e.message, true); }
+    finally    { saveBtn.disabled = false; }
+};
+
+// ── 일정 삭제 ──
+window.deleteSchedule = async function(id) {
+    if (!confirm(t('sch_del_confirm'))) return;
+    try {
+        await deleteDoc(doc(db, ECOL, id));
+        toast(t('sch_del_done'));
+    } catch(e) { toast(t('sch_del_fail') + e.message, true); }
 };
 
 
