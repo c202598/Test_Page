@@ -1714,15 +1714,39 @@ window.submitDiary = async function() {
         let videoName = null;
         if (diaryPendingVideo) {
             const file      = diaryPendingVideo.file;
-            const storePath = `diary_videos/${currentUser.id}_${Date.now()}_${file.name}`;
+            // 파일명에서 특수문자 제거
+            const safeName  = file.name.replace(/[^a-zA-Z0-9._-]/g, '_');
+            const storePath = `diary_videos/${currentUser.id}_${Date.now()}_${safeName}`;
             const storageRef = ref(storage, storePath);
-            await new Promise((resolve, reject) => {
-                const task = uploadBytesResumable(storageRef, file);
-                task.on('state_changed', null, reject, () => resolve(task.snapshot));
-            });
-            videoUrl  = await getDownloadURL(storageRef);
-            videoName = storePath;
+
+            // 진행률 표시 업데이트
+            setBtnLoad('btn-diary-submit', true, '동영상 업로드 중...');
+
+            try {
+                await new Promise((resolve, reject) => {
+                    const task = uploadBytesResumable(storageRef, file);
+                    task.on('state_changed',
+                        snap => {
+                            const pct = Math.round(snap.bytesTransferred / snap.totalBytes * 100);
+                            const btn = document.getElementById('btn-diary-submit');
+                            if (btn) btn.innerHTML = `<span class="spinner"></span> ${pct}%`;
+                        },
+                        err => reject(err),
+                        () => resolve(task.snapshot)
+                    );
+                });
+                videoUrl  = await getDownloadURL(storageRef);
+                videoName = storePath;
+            } catch(storageErr) {
+                // Storage 실패 시 명확한 에러 메시지
+                const msg = storageErr.code === 'storage/unauthorized'
+                    ? 'Firebase Storage 권한이 없습니다. Console에서 규칙을 확인하세요.'
+                    : 'Storage 업로드 실패: ' + storageErr.message;
+                throw new Error(msg);
+            }
         }
+
+        setBtnLoad('btn-diary-submit', true, t('diary_submitting'));
 
         await addDoc(collection(db, DCOL), {
             userId:    currentUser.id,
