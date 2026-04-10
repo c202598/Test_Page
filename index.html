@@ -1907,7 +1907,7 @@ function startDiaryListener() {
 // 날짜 필터 적용
 window.applyDiaryFilter = function() {
     const dateVal = document.getElementById('diary-filter-date').value;
-    let entries = isAdmin ? allDiary : allDiary.filter(d => d.userId === currentUser.id);
+    let entries = allDiary;
     if (dateVal) entries = entries.filter(d => d.date === dateVal);
     renderDiary(entries);
 };
