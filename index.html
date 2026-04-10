@@ -22,6 +22,69 @@
             --amber:#b45309; --amber-light:#fef3c7;
             --radius:12px; --radius-sm:8px;
             --shadow:0 1px 3px rgba(0,0,0,0.08),0 4px 16px rgba(0,0,0,0.06);
+            /* 테마 포인트 변수 */
+            --accent:#1a73e8; --accent-light:#e8f0fe; --accent-text:#ffffff;
+            --header-bg:#ffffff; --header-border:#e2e6ea;
+            --tab-active-bg:var(--accent); --tab-active-color:#ffffff;
+            --admin-menu-bg:#e8f0fe; --admin-menu-color:#0c447c; --admin-menu-border:#bfdbfe;
+            --admin-tab-bg:#ffffff; --admin-tab-color:#185fa5; --admin-tab-border:#bfdbfe;
+            --btn-checkin-bg:#1e8c4a; --btn-checkin-color:#ffffff;
+            --btn-checkout-bg:#e8f0fe; --btn-checkout-color:#1a73e8;
+            --greeting-bg:#e8f0fe; --greeting-border:transparent; --greeting-accent:#1a73e8;
+        }
+
+        /* ── 테마 A: 다크 포인트 ── */
+        [data-theme="dark"] {
+            --bg:#0f172a; --surface:#1e293b; --border:#334155;
+            --text-primary:#f1f5f9; --text-secondary:#94a3b8; --text-hint:#64748b;
+            --blue:#818cf8; --blue-light:#312e81;
+            --green:#34d399; --green-light:#14532d;
+            --red:#f87171; --red-light:#450a0a;
+            --amber:#fbbf24; --amber-light:#451a03;
+            --accent:#6366f1; --accent-light:#312e81; --accent-text:#ffffff;
+            --header-bg:#1e293b; --header-border:#334155;
+            --tab-active-bg:#6366f1; --tab-active-color:#ffffff;
+            --admin-menu-bg:#1e293b; --admin-menu-color:#818cf8; --admin-menu-border:#334155;
+            --admin-tab-bg:#0f172a; --admin-tab-color:#818cf8; --admin-tab-border:#334155;
+            --btn-checkin-bg:#14532d; --btn-checkin-color:#86efac;
+            --btn-checkout-bg:#312e81; --btn-checkout-color:#a5b4fc;
+            --greeting-bg:#1e293b; --greeting-border:#334155; --greeting-accent:#6366f1;
+        }
+
+        /* ── 테마 B: 클린 미니멀 ── */
+        [data-theme="minimal"] {
+            --bg:#f8fafc; --surface:#ffffff; --border:#f1f5f9;
+            --text-primary:#0f172a; --text-secondary:#94a3b8; --text-hint:#cbd5e1;
+            --blue:#4f46e5; --blue-light:#eef2ff;
+            --green:#059669; --green-light:#f0fdf4;
+            --red:#dc2626; --red-light:#fef2f2;
+            --amber:#d97706; --amber-light:#fffbeb;
+            --accent:#4f46e5; --accent-light:#eef2ff; --accent-text:#ffffff;
+            --header-bg:#ffffff; --header-border:#f1f5f9;
+            --tab-active-bg:#eef2ff; --tab-active-color:#4f46e5;
+            --admin-menu-bg:#f5f3ff; --admin-menu-color:#7c3aed; --admin-menu-border:#ede9fe;
+            --admin-tab-bg:#ffffff; --admin-tab-color:#4f46e5; --admin-tab-border:#e0e7ff;
+            --btn-checkin-bg:#059669; --btn-checkin-color:#ffffff;
+            --btn-checkout-bg:#f5f3ff; --btn-checkout-color:#7c3aed;
+            --greeting-bg:#eef2ff; --greeting-border:#e0e7ff; --greeting-accent:#4f46e5;
+        }
+
+        /* ── 테마 C: 소프트 파스텔 ── */
+        [data-theme="pastel"] {
+            --bg:#fdf6ee; --surface:#ffffff; --border:#fde8c8;
+            --text-primary:#92400e; --text-secondary:#b45309; --text-hint:#d97706;
+            --blue:#d97706; --blue-light:#fef3c7;
+            --green:#059669; --green-light:#d1fae5;
+            --red:#dc2626; --red-light:#fee2e2;
+            --amber:#d97706; --amber-light:#fef3c7;
+            --accent:#f59e0b; --accent-light:#fef3c7; --accent-text:#ffffff;
+            --header-bg:#fffbf5; --header-border:#fde8c8;
+            --tab-active-bg:#f59e0b; --tab-active-color:#ffffff;
+            --admin-menu-bg:#fffbf5; --admin-menu-color:#d97706; --admin-menu-border:#fde8c8;
+            --admin-tab-bg:#ffffff; --admin-tab-color:#b45309; --admin-tab-border:#fde8c8;
+            --btn-checkin-bg:#059669; --btn-checkin-color:#ffffff;
+            --btn-checkout-bg:#fffbf5; --btn-checkout-color:#d97706;
+            --greeting-bg:#fffbf5; --greeting-border:#fde8c8; --greeting-accent:#f59e0b;
         }
         *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
         body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text-primary);min-height:100vh;padding:16px}
@@ -45,7 +108,7 @@
         .btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:12px 18px;border:none;border-radius:var(--radius-sm);font-family:'Noto Sans KR',sans-serif;font-size:15px;font-weight:700;cursor:pointer;transition:opacity .15s,transform .1s;color:white;width:100%}
         .btn:active{transform:scale(0.98)}
         .btn:disabled{opacity:.45;cursor:not-allowed}
-        .btn-blue{background:var(--blue)} .btn-green{background:var(--green)}
+        .btn-blue{background:var(--accent)} .btn-green{background:var(--btn-checkin-bg);color:var(--btn-checkin-color)}
         .btn-red{background:var(--red)}   .btn-amber{background:var(--amber)}
         .btn-ghost{background:transparent;border:1px solid var(--border);color:var(--text-secondary);font-weight:500;font-size:13px}
         .btn-row{display:flex;gap:10px} .btn-row .btn{flex:1}
@@ -75,15 +138,15 @@
         .section-title{font-size:12px;font-weight:700;color:var(--text-hint);letter-spacing:.06em;text-transform:uppercase}
         .panel-tabs{display:flex;gap:4px;margin-bottom:8px;flex-wrap:wrap}
         .panel-tab{padding:7px 14px;border-radius:20px;font-size:13px;font-weight:500;cursor:pointer;border:1px solid var(--border);background:transparent;color:var(--text-secondary);font-family:'Noto Sans KR',sans-serif;transition:all .15s;white-space:nowrap}
-        .panel-tab.active{background:var(--blue);color:white;border-color:var(--blue)}
-        .admin-menu-toggle{display:inline-flex;align-items:center;gap:6px;padding:6px 13px;border-radius:20px;border:1px solid #bfdbfe;background:#e8f0fe;color:#0c447c;font-size:12px;font-weight:600;cursor:pointer;font-family:'Noto Sans KR',sans-serif;margin-bottom:8px;transition:background .15s;white-space:nowrap}
+        .panel-tab.active{background:var(--tab-active-bg);color:var(--tab-active-color);border-color:var(--tab-active-bg)}
+        .admin-menu-toggle{display:inline-flex;align-items:center;gap:6px;padding:6px 13px;border-radius:20px;border:1px solid var(--admin-menu-border);background:var(--admin-menu-bg);color:var(--admin-menu-color);font-size:12px;font-weight:600;cursor:pointer;font-family:'Noto Sans KR',sans-serif;margin-bottom:8px;transition:background .15s;white-space:nowrap}
         .admin-menu-toggle:hover{background:#d2e3fc}
         .admin-menu-toggle .amt-arrow{font-size:10px;display:inline-block;transition:transform .2s;margin-left:2px}
         .admin-menu-toggle.open .amt-arrow{transform:rotate(180deg)}
         .admin-panel-tabs{display:none;flex-wrap:wrap;gap:4px;padding:10px 12px;background:#f0f7ff;border-radius:12px;border:1px solid #bfdbfe;margin-bottom:8px}
         .admin-panel-tabs.open{display:flex}
-        .admin-panel-tab{padding:6px 12px;border-radius:20px;font-size:12px;font-weight:500;cursor:pointer;border:1px solid #bfdbfe;background:white;color:#185fa5;font-family:'Noto Sans KR',sans-serif;transition:all .15s;white-space:nowrap}
-        .admin-panel-tab.active{background:var(--blue);color:white;border-color:var(--blue)}
+        .admin-panel-tab{padding:6px 12px;border-radius:20px;font-size:12px;font-weight:500;cursor:pointer;border:1px solid var(--admin-tab-border);background:var(--admin-tab-bg);color:var(--admin-tab-color);font-family:'Noto Sans KR',sans-serif;transition:all .15s;white-space:nowrap}
+        .admin-panel-tab.active{background:var(--tab-active-bg);color:var(--tab-active-color);border-color:var(--tab-active-bg)}
         .admin-panel-tab:hover:not(.active){background:#e8f0fe}
         .admin-menu-label{font-size:10px;font-weight:700;color:#185fa5;letter-spacing:.06em;text-transform:uppercase;width:100%;margin-bottom:4px}
 
@@ -208,6 +271,16 @@
         .photo-viewer img{max-width:95vw;max-height:90vh;border-radius:8px;object-fit:contain}
         .photo-viewer-close{position:fixed;top:16px;right:20px;color:white;font-size:30px;cursor:pointer;background:none;border:none}
         .diary-empty{text-align:center;color:var(--text-hint);padding:28px 0;font-size:13px}
+
+        /* ── 테마 선택 카드 ── */
+        .theme-card{border:2px solid var(--border);border-radius:10px;overflow:hidden;cursor:pointer;transition:border-color .2s,transform .15s;background:var(--surface)}
+        .theme-card:hover{transform:translateY(-2px);border-color:var(--accent)}
+        .theme-card.active{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent)}
+        .theme-card-preview{height:52px;display:flex;flex-direction:column;gap:3px;padding:8px}
+        .theme-card-bar{height:8px;border-radius:3px}
+        .theme-card-label{padding:7px 10px;font-size:11px;font-weight:700;color:var(--text-secondary);display:flex;align-items:center;justify-content:space-between;border-top:1px solid var(--border)}
+        .theme-card-check{width:14px;height:14px;border-radius:50%;background:var(--accent);display:none;align-items:center;justify-content:center;font-size:9px;color:#fff}
+        .theme-card.active .theme-card-check{display:flex}
         /* ── 통계 대시보드 ── */
         .stats-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px;margin-bottom:18px}
         .stat-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:14px 16px;text-align:center}
@@ -506,10 +579,7 @@
         .greeting-top{font-size:11px;font-weight:600;opacity:.7;letter-spacing:.04em;margin-bottom:3px;font-family:'IBM Plex Mono',monospace}
         .greeting-main{font-size:15px;font-weight:700;line-height:1.35}
         .greeting-sub{font-size:12px;opacity:.7;margin-top:2px}
-        .greeting-morning  {background:linear-gradient(120deg,#fff7ed,#ffedd5);color:#9a3412}
-        .greeting-noon     {background:linear-gradient(120deg,#fefce8,#fef9c3);color:#854d0e}
-        .greeting-afternoon{background:linear-gradient(120deg,#eff6ff,#dbeafe);color:#1e3a5f}
-        .greeting-evening  {background:linear-gradient(120deg,#f0f4ff,#e0e7ff);color:#312e81}
+        .greeting-morning,.greeting-noon,.greeting-afternoon,.greeting-evening{background:var(--greeting-bg);color:var(--text-primary);border:1px solid var(--greeting-border)}
         .greeting-night    {background:linear-gradient(120deg,#1e1b4b,#312e81);color:#e0e7ff}
         .greeting-night .greeting-top{color:#a5b4fc}
         .greeting-night .greeting-sub{color:#c7d2fe}
@@ -745,6 +815,12 @@
 
     <!-- ④ 설정 (관리자) -->
     <div id="panel-settings" class="hidden">
+        <!-- 테마 설정 -->
+        <div class="admin-box" style="margin-bottom:12px">
+            <div class="admin-box-title" data-i18n="theme_settings_title">테마 설정</div>
+            <p style="font-size:12px;color:var(--text-secondary);margin-bottom:14px" data-i18n="theme_settings_desc">앱의 색상 테마를 선택하세요.</p>
+            <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px" id="theme-picker-row"></div>
+        </div>
         <!-- 동영상 용량 설정 -->
         <div class="admin-box" style="margin-bottom:12px">
             <div class="admin-box-title" data-i18n="video_settings_title">동영상 업로드 설정</div>
@@ -1187,6 +1263,13 @@ ko:{
     sch_no_title:'제목을 입력하세요.',
     sch_no_start:'시작일을 입력하세요.',
     sch_load_fail:'일정 로드 실패: ',
+    theme_settings_title:'테마 설정',
+    theme_settings_desc:'앱의 색상 테마를 선택하세요. 선택 즉시 적용됩니다.',
+    theme_default:'기본 (블루)',
+    theme_dark:'다크 포인트',
+    theme_minimal:'클린 미니멀',
+    theme_pastel:'소프트 파스텔',
+    theme_saved:'테마가 변경되었습니다.',
     hday_legend_kr:'🇰🇷 한국 공휴일',
     hday_legend_id:'🇮🇩 인도네시아 공휴일',
     hday_suffix_kr:' (🇰🇷)',
@@ -1445,6 +1528,13 @@ id:{
     sch_no_title:'Masukkan judul jadwal.',
     sch_no_start:'Masukkan tanggal mulai.',
     sch_load_fail:'Gagal memuat jadwal: ',
+    theme_settings_title:'Pengaturan Tema',
+    theme_settings_desc:'Pilih tema warna aplikasi. Langsung diterapkan.',
+    theme_default:'Default (Biru)',
+    theme_dark:'Dark Point',
+    theme_minimal:'Clean Minimal',
+    theme_pastel:'Soft Pastel',
+    theme_saved:'Tema berhasil diubah.',
     hday_legend_kr:'🇰🇷 Hari Libur Korea',
     hday_legend_id:'🇮🇩 Hari Libur Indonesia',
     hday_suffix_kr:' (🇰🇷)',
@@ -1870,6 +1960,7 @@ window.switchPanel = function(panel) {
     if (panel === 'diary') applyDiaryFilter();
     if (panel === 'schedule') renderCalendar();
     if (panel === 'stats') renderStats();
+    if (panel === 'settings') renderThemePicker();
 };
 
 // ═══════════════════════════════════════════
@@ -4663,7 +4754,96 @@ window.exportMonthlyExcel = function() {
 };
 
 
+// ═══════════════════════════════════════════
+//  테마 시스템
+// ═══════════════════════════════════════════
+
+const THEMES = [
+    {
+        id: 'default',
+        labelKey: 'theme_default',
+        bars: ['#1a73e8','#e8f0fe','#e2e6ea'],
+        bg: '#f0f2f5', surface: '#ffffff'
+    },
+    {
+        id: 'dark',
+        labelKey: 'theme_dark',
+        bars: ['#6366f1','#1e293b','#334155'],
+        bg: '#0f172a', surface: '#1e293b'
+    },
+    {
+        id: 'minimal',
+        labelKey: 'theme_minimal',
+        bars: ['#4f46e5','#eef2ff','#f1f5f9'],
+        bg: '#f8fafc', surface: '#ffffff'
+    },
+    {
+        id: 'pastel',
+        labelKey: 'theme_pastel',
+        bars: ['#f59e0b','#fef3c7','#fde8c8'],
+        bg: '#fdf6ee', surface: '#ffffff'
+    },
+];
+
+let currentTheme = 'default';
+
+function applyTheme(themeId) {
+    currentTheme = themeId;
+    const html = document.documentElement;
+    if (themeId === 'default') {
+        html.removeAttribute('data-theme');
+    } else {
+        html.setAttribute('data-theme', themeId);
+    }
+    localStorage.setItem('adina-theme', themeId);
+    renderThemePicker();
+}
+
+function renderThemePicker() {
+    const row = document.getElementById('theme-picker-row');
+    if (!row) return;
+    row.innerHTML = '';
+    THEMES.forEach(th => {
+        const card = document.createElement('div');
+        card.className = 'theme-card' + (currentTheme === th.id ? ' active' : '');
+        card.onclick = () => { applyTheme(th.id); toast(t('theme_saved')); };
+
+        const preview = document.createElement('div');
+        preview.className = 'theme-card-preview';
+        preview.style.background = th.bg;
+        th.bars.forEach(color => {
+            const bar = document.createElement('div');
+            bar.className = 'theme-card-bar';
+            bar.style.background = color;
+            preview.appendChild(bar);
+        });
+
+        const label = document.createElement('div');
+        label.className = 'theme-card-label';
+        label.style.background = th.surface;
+        const name = document.createElement('span');
+        name.textContent = t(th.labelKey);
+        const check = document.createElement('div');
+        check.className = 'theme-card-check';
+        check.textContent = '✓';
+        label.appendChild(name);
+        label.appendChild(check);
+
+        card.appendChild(preview);
+        card.appendChild(label);
+        row.appendChild(card);
+    });
+}
+
+// 앱 시작 시 저장된 테마 복원
+function initTheme() {
+    const saved = localStorage.getItem('adina-theme') || 'default';
+    applyTheme(saved);
+}
+
+
 applyI18n();
+initTheme();
 </script>
 </body>
 </html>
