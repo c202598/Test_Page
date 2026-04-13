@@ -106,7 +106,7 @@
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                min-height: calc(100vh - 52px);
+                min-height: calc(100vh - 60px);
                 padding: 20px;
             }
             .pc-login-wrap .card { margin: 0; width: 100%; max-width: 400px; }
@@ -114,10 +114,10 @@
             /* ── PC 헤더 ── */
             .app-header {
                 position: sticky; top: 0; z-index: 100;
-                height: 52px;
+                height: 60px;
                 background: var(--header-bg);
                 border-bottom: 1px solid var(--header-border);
-                padding: 0 24px;
+                padding: 0 28px;
                 display: grid;
                 grid-template-columns: auto 1fr auto;
                 align-items: center;
@@ -129,9 +129,9 @@
             .app-header img { height: 26px; flex-shrink: 0; }
             .pc-header-greeting {
                 justify-self: center;
-                font-size: 13px; font-weight: 600;
+                font-size: 14px; font-weight: 600;
                 color: var(--text-secondary);
-                padding: 5px 16px;
+                padding: 6px 18px;
                 background: var(--greeting-bg);
                 border-radius: 20px;
                 white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
@@ -156,28 +156,28 @@
 
             /* ── 사이드바 ── */
             .pc-sidebar {
-                width: 210px;
+                width: 240px;
                 flex-shrink: 0;
                 background: var(--surface);
                 border-right: 1px solid var(--border);
                 display: flex;
                 flex-direction: column;
                 overflow-y: auto;
-                padding: 12px 0;
+                padding: 16px 0;
             }
             .pc-nav-section { padding: 0 8px; margin-bottom: 4px; }
             .pc-nav-label {
-                font-size: 9px; font-weight: 700;
+                font-size: 11px; font-weight: 700;
                 color: var(--text-hint);
-                text-transform: uppercase; letter-spacing: .08em;
-                padding: 6px 10px 4px;
+                text-transform: uppercase; letter-spacing: .06em;
+                padding: 8px 12px 4px;
             }
             .pc-nav-item {
-                display: flex; align-items: center; gap: 9px;
-                padding: 8px 10px;
+                display: flex; align-items: center; gap: 10px;
+                padding: 10px 12px;
                 border-radius: 8px;
                 cursor: pointer;
-                font-size: 13px; font-weight: 500;
+                font-size: 14px; font-weight: 500;
                 color: var(--text-secondary);
                 margin-bottom: 1px;
                 transition: background .12s, color .12s;
@@ -191,13 +191,13 @@
                 color: var(--tab-active-color);
                 font-weight: 700;
             }
-            .pc-nav-icon { font-size: 15px; flex-shrink: 0; width: 20px; text-align: center; }
+            .pc-nav-icon { font-size: 17px; flex-shrink: 0; width: 22px; text-align: center; }
             .pc-nav-divider { border: none; border-top: 1px solid var(--border); margin: 8px 10px; }
             .pc-admin-nav-label {
-                font-size: 9px; font-weight: 700;
+                font-size: 11px; font-weight: 700;
                 color: var(--admin-menu-color);
-                text-transform: uppercase; letter-spacing: .08em;
-                padding: 6px 10px 4px;
+                text-transform: uppercase; letter-spacing: .06em;
+                padding: 8px 12px 4px;
                 display: flex; align-items: center; gap: 5px;
             }
             .pc-admin-nav-label::before {
@@ -221,7 +221,7 @@
             .pc-sidebar-user {
                 margin-top: auto;
                 border-top: 1px solid var(--border);
-                padding: 12px 10px;
+                padding: 14px 12px;
             }
             .pc-sidebar-user-row {
                 display: flex; align-items: center; gap: 8px;
@@ -233,7 +233,7 @@
                 border-radius: 8px;
                 background: transparent;
                 color: var(--text-secondary);
-                font-size: 12px; font-weight: 600;
+                font-size: 13px; font-weight: 600;
                 cursor: pointer; font-family: 'Noto Sans KR', sans-serif;
                 transition: background .12s;
             }
@@ -243,7 +243,7 @@
             .pc-main-content {
                 flex: 1;
                 overflow-y: auto;
-                padding: 20px;
+                padding: 24px;
                 background: var(--bg);
             }
 
@@ -251,22 +251,22 @@
             .pc-stat-strip {
                 display: grid;
                 grid-template-columns: repeat(4, minmax(0, 1fr));
-                gap: 12px;
-                margin-bottom: 18px;
+                gap: 16px;
+                margin-bottom: 22px;
             }
             .pc-stat-strip-card {
                 background: var(--surface);
                 border: 1px solid var(--border);
                 border-radius: 10px;
-                padding: 14px 16px;
+                padding: 18px 20px;
             }
             .pc-stat-strip-val {
-                font-size: 22px; font-weight: 800;
+                font-size: 28px; font-weight: 800;
                 font-family: 'IBM Plex Mono', monospace;
-                margin-bottom: 2px;
+                margin-bottom: 4px;
             }
             .pc-stat-strip-lbl {
-                font-size: 10px; color: var(--text-hint);
+                font-size: 12px; color: var(--text-hint);
                 font-weight: 700; text-transform: uppercase; letter-spacing: .04em;
             }
 
@@ -274,8 +274,8 @@
             .pc-two-col {
                 display: grid;
                 grid-template-columns: 1fr 1fr;
-                gap: 14px;
-                margin-bottom: 14px;
+                gap: 18px;
+                margin-bottom: 18px;
             }
             .pc-two-col-wide {
                 display: grid;
@@ -293,13 +293,13 @@
                 overflow: hidden;
             }
             .pc-panel-hd {
-                padding: 12px 16px;
+                padding: 16px 20px;
                 border-bottom: 1px solid var(--border);
-                font-size: 13px; font-weight: 700;
+                font-size: 15px; font-weight: 700;
                 color: var(--text-primary);
                 display: flex; align-items: center; justify-content: space-between;
             }
-            .pc-panel-bd { padding: 14px 16px; }
+            .pc-panel-bd { padding: 16px 20px; }
 
             /* 모바일 전용 요소 PC에서 숨기기 */
             .card#auth-card { max-width: 400px; }
@@ -343,7 +343,7 @@
 
         .app-title{font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:600;color:var(--text-secondary);letter-spacing:.05em}
         .header-right{display:flex;align-items:center;gap:12px}
-        .clock{font-family:'IBM Plex Mono',monospace;font-size:18px;font-weight:600;color:var(--blue)}
+        .clock{font-family:'IBM Plex Mono',monospace;font-size:20px;font-weight:600;color:var(--blue)}
 
         .lang-switcher{display:flex;gap:4px;background:var(--border);border-radius:20px;padding:3px}
         .lang-btn{padding:3px 10px;border:none;border-radius:16px;font-size:12px;font-weight:700;cursor:pointer;background:transparent;color:var(--text-secondary);transition:all .15s;font-family:'IBM Plex Mono',monospace}
@@ -372,7 +372,7 @@
         .av-upload-overlay{position:absolute;inset:0;border-radius:50%;background:rgba(0,0,0,0.45);color:white;font-size:16px;display:none;align-items:center;justify-content:center;cursor:pointer}
         .avatar.editable:hover .av-upload-overlay{display:flex}
         .user-name{font-weight:700;font-size:15px}
-        .badge{font-size:10px;font-weight:700;padding:2px 7px;border-radius:20px;vertical-align:middle}
+        .badge{font-size:10px;font-weight:700;padding:2px 7px;border-radius:20px;vertical-align:middle;white-space:nowrap;display:inline-block}
         .badge-admin{background:var(--blue-light);color:var(--blue)}
         .badge-in{background:var(--green-light);color:var(--green)}
         .badge-out{background:var(--red-light);color:var(--red)}
@@ -411,15 +411,17 @@
 
         /* 테이블 */
         .table-wrapper{width:100%;overflow-x:auto}
-        table{width:100%;border-collapse:collapse;font-size:13px;min-width:380px}
+        table{width:100%;border-collapse:collapse;font-size:13px;min-width:320px}
         thead th{text-align:left;padding:8px 10px;color:var(--text-hint);font-weight:600;font-size:11px;letter-spacing:.05em;text-transform:uppercase;border-bottom:1px solid var(--border);white-space:nowrap}
-        tbody td{padding:10px;border-bottom:1px solid #f3f4f6;vertical-align:middle}
+        thead th:nth-child(2){width:64px;min-width:64px}
+        tbody td:nth-child(2){width:64px;min-width:64px}
+        tbody td{padding:8px 10px;border-bottom:1px solid var(--border);vertical-align:middle}
         tbody tr:last-child td{border-bottom:none}
         tbody tr:hover td{background:#fafbfc}
         tbody tr.ot-row td{background:var(--amber-light);color:var(--text-primary)}
         tbody tr.ot-row:hover td{background:var(--amber-light);opacity:.85}
 
-        .type-chip{font-size:11px;font-weight:700;padding:3px 9px;border-radius:20px}
+        .type-chip{font-size:11px;font-weight:700;padding:3px 9px;border-radius:20px;white-space:nowrap;display:inline-block}
         .type-in{background:var(--green-light);color:var(--green)}
         .type-out{background:var(--red-light);color:var(--red)}
         .type-ot{background:var(--amber-light);color:var(--amber)}
@@ -962,12 +964,12 @@
     <!-- 하단 사용자 정보 -->
     <div class="pc-sidebar-user">
       <div class="pc-sidebar-user-row">
-        <div class="avatar" id="pc-sidebar-avatar" style="width:32px;height:32px;font-size:11px">
+        <div class="avatar" id="pc-sidebar-avatar" style="width:38px;height:38px;font-size:13px">
           <span id="pc-sidebar-avatar-txt">?</span>
         </div>
         <div>
-          <div style="font-size:12px;font-weight:700;color:var(--text-primary)" id="pc-sidebar-name"></div>
-          <div style="font-size:10px;color:var(--text-hint)" id="pc-sidebar-badge"></div>
+          <div style="font-size:14px;font-weight:700;color:var(--text-primary)" id="pc-sidebar-name"></div>
+          <div style="font-size:12px;color:var(--text-hint)" id="pc-sidebar-badge"></div>
         </div>
       </div>
       <button class="pc-sidebar-logout" onclick="doLogout()" data-i18n="btn_logout">로그아웃</button>
@@ -1009,10 +1011,10 @@
               <button class="btn btn-red"   style="flex:1" id="pc-btn-out" onclick="record('checkout')" data-i18n="btn_checkout">퇴근하기</button>
             </div>
             <div style="display:flex;gap:16px;flex-wrap:wrap;padding:10px 12px;background:var(--bg);border-radius:8px;font-size:12px">
-              <div><div style="font-size:10px;color:var(--text-hint);font-weight:700;text-transform:uppercase;margin-bottom:2px" data-i18n="today_checkin">출근</div><div style="font-family:monospace;font-weight:700;font-size:13px" id="pc-today-in">-</div></div>
-              <div><div style="font-size:10px;color:var(--text-hint);font-weight:700;text-transform:uppercase;margin-bottom:2px" data-i18n="today_checkout">퇴근</div><div style="font-family:monospace;font-weight:700;font-size:13px" id="pc-today-out">-</div></div>
-              <div><div style="font-size:10px;color:var(--text-hint);font-weight:700;text-transform:uppercase;margin-bottom:2px">근무</div><div style="font-family:monospace;font-weight:700;font-size:13px;color:var(--blue)" id="pc-work-elapsed">-</div></div>
-              <div><div style="font-size:10px;color:var(--text-hint);font-weight:700;text-transform:uppercase;margin-bottom:2px" data-i18n="today_ot">야근기준</div><div style="font-family:monospace;font-weight:700;font-size:13px" id="pc-ot-threshold">-</div></div>
+              <div><div style="font-size:10px;color:var(--text-hint);font-weight:700;text-transform:uppercase;margin-bottom:2px" data-i18n="today_checkin">출근</div><div style="font-family:monospace;font-weight:700;font-size:15px" id="pc-today-in">-</div></div>
+              <div><div style="font-size:10px;color:var(--text-hint);font-weight:700;text-transform:uppercase;margin-bottom:2px" data-i18n="today_checkout">퇴근</div><div style="font-family:monospace;font-weight:700;font-size:15px" id="pc-today-out">-</div></div>
+              <div><div style="font-size:10px;color:var(--text-hint);font-weight:700;text-transform:uppercase;margin-bottom:2px">근무</div><div style="font-family:monospace;font-weight:700;font-size:15px;color:var(--blue)" id="pc-work-elapsed">-</div></div>
+              <div><div style="font-size:10px;color:var(--text-hint);font-weight:700;text-transform:uppercase;margin-bottom:2px" data-i18n="today_ot">야근기준</div><div style="font-family:monospace;font-weight:700;font-size:15px" id="pc-ot-threshold">-</div></div>
             </div>
           </div>
         </div>
