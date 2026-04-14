@@ -2290,6 +2290,8 @@ window.switchPanel = function(panel) {
     // PC 모드면 pcSwitchPanel 로 위임
     if (IS_PC && IS_PC()) { pcSwitchPanel(panel); return; }
     currentPanel = panel;
+    // Android 앱 브릿지에 패널 변경 알림
+    try { if (window.AndroidApp) AndroidApp.setPanel(panel); } catch(e) {}
     ['records','summary','overtime','diary','schedule','stats','users','settings'].forEach(p => {
         const el = document.getElementById('panel-'+p);
         if (el) el.classList.toggle('hidden', p !== panel);
@@ -5322,6 +5324,8 @@ let currentPCPanel = 'records';
 window.pcSwitchPanel = function(panel) {
     currentPCPanel = panel;
     currentPanel   = panel;
+    // Android 앱 브릿지에 패널 변경 알림
+    try { if (window.AndroidApp) AndroidApp.setPanel(panel); } catch(e) {}
 
     // 모든 PC 패널 숨김
     ['records','diary','schedule','summary','overtime','stats','users','settings'].forEach(p => {
